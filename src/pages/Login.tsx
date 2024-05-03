@@ -35,40 +35,41 @@ const submitLogin = async () => {
             });
            tokenAuth = response.data.token;
            autorizado();
-    
         }
             catch(error){
             console.log(error);
     }
-    
 } 
     return(
         <>
         <section className="login">
         <section className="loginFormConteiner">
             <form action='post'>
-                <h1>LOGIN </h1>
+                <h1>Login</h1>
                     <LabelLoginComponent
                         name = "usuario"
                         placeholder = "Usuario"
                         IClassName = "fa-solid fa-user"
                         change = {handleUsuario}
                     />
-              
-        
                     <LabelLoginComponent
                     name = "senha"
                     placeholder = "Senha"
                     IClassName = "fa-solid fa-lock"
                     change = {handlePassword}
                     />
-                <a onClick={submitLogin}>ENTRAR</a>
+                        <a className='btn-entrar' onClick={submitLogin}>Entrar</a>
+                    <div className="buttons">
+                        <a href="">Esqueci minha senha</a>
+                        <a href="/registro">Registre-se</a>
+                    </div>
             </form>
+            
         </section>
+        
         <div className="imgBackground">
             <img src={imgBackground} alt="Background Aplicação" /></div>        
         </section>
-
         </>
     )
 }

@@ -19,12 +19,10 @@
     }
 }
 .loginFormConteiner{
-    @include position (flex, center, center, row);
+    @include position (flex, center, center, column);
     width: 50vw;
-
     form{
         @include position(flex, center, center, column);
-
         font-family: "Roboto", sans-serif;
         font-weight: 200;
         font-style: normal;
@@ -32,35 +30,30 @@
         min-width: 30vw;
         gap:20px;
         padding: 0px 20px;
+            .btn-entrar{
+                @include position (flex, center, center, row);
+                width: 24vw;
+                height: 6vh;
+                background-color: #354545;
+                text-decoration: none;
+                color: #fff;
+                font-weight: 300;
+                border: none;
+                cursor: pointer;
+            }
+}
+            .buttons{
+                @include position(flex, space-around, center, row);
+                gap: 15px;
+                width: 24vw;
+                    a{
+                        background-color: none;
+                        font-weight: 400;
+                        color:#354545;
+                    }
+                }          
 
-        label{
-            border-bottom: 1px solid;
-            background-color: #DCDCDC;
-            padding: 3px 15px;
-        }
-        input{
-           width: 20vw;
-           height: 4vh;
-           border: transparent;
-           background-color: transparent;
-           color: #000;
-           margin-right: 2px;
-           outline: none;
-           }
     
-            
-           }
-           
 }
     
-    a{
-        @include position (flex, center, center, row);
-        width: 24vw;
-        height: 6vh;
-        background-color: #354545;
-        text-decoration: none;
-        color: #fff;
-        border: none;
-        cursor: pointer;
-    }
 
