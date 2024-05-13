@@ -9,9 +9,12 @@
 
 .login{
     @include position (flex, space-around, center, row);
+    height: 100vh;
+    background-color:#354545;
 
     .imgBackground{
-        height: 100vh;
+        height: 80vh;
+        width: 50vw;
         img{
             height: 100%;
             width: 100%;
@@ -19,20 +22,38 @@
     }
 }
 .loginFormConteiner{
-    @include position (flex, center, center, column);
-    width: 50vw;
+    @include position (flex, center, center, row);
+    border: 1px solid #354545;
+    border-radius: 10px;
+    background-color: #fff;
+    h1{
+        font-size: 2em;
+        color: #354545;
+        text-align: center;
+        width: 90%;
+        span{
+            color:#fad75b
+        }
+
+        
+    }
+    }
+    
     form{
         @include position(flex, center, center, column);
-        font-family: "Roboto", sans-serif;
         font-weight: 200;
         font-style: normal;
-        min-height: 100vh;
+        min-height: 80vh;
         min-width: 30vw;
         gap:20px;
-        padding: 0px 20px;
+
+        .imgLogo{
+            width: 90px;
+            height: 90px;
+        }
             .btn-entrar{
                 @include position (flex, center, center, row);
-                width: 24vw;
+                width: 80%;
                 height: 6vh;
                 background-color: #354545;
                 text-decoration: none;
@@ -45,7 +66,8 @@
             .buttons{
                 @include position(flex, space-around, center, row);
                 gap: 15px;
-                width: 24vw;
+                width: 80%;
+                flex-wrap: wrap;
                     a{
                         background-color: none;
                         font-weight: 400;
@@ -53,7 +75,24 @@
                     }
                 }          
 
+@media (max-width:700px){
+    .loginFormConteiner{
+        width: 70%;
+        height: 95%;
+        form{
+            width: 100%;
+        }
+    }
+    .imgBackground{
+    display: none;
+}
+@media (max-width:500px){
+    .loginFormConteiner{
+        width: 95%;
+        height: 95%;
+}
     
+}
 }
     
 

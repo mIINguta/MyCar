@@ -9,38 +9,75 @@
     @include position(flex,center, center,row);
     height: 100vh;
     width: 100vw;
-    background-color: #2c6c8a;
+    background-color: #202020;
 
     h1{
         color: #fff;
-        font-weight: 300;
+        font-size: 2em;
+        letter-spacing: 1px;
+        width: 95%;
+        text-align: center;
+        span{
+            color: #000;
+        }
     }
-    .registroFormConteiner{    
+}
+    .registroFormConteiner{  
+        background-color:#354545;
+        border-radius: 10px;
+        height: 80%;
+        width: 80vw;
+       
         @include position(flex,center, center,row);
         form{
+            font-weight: 300;
             @include position(flex,center, center,column);
-            width:40vw;
-            height: 70vh;
-            gap: 10px;
-            
-
+            height:100%;
+            width: 45%;
+            gap: 15px;
             a{  
                 @include position(flex,center, center,row);
-                width: 24vw;
-                background-color: #5d7c91;
+                width: 80%;
+                background-color: #202020;
                 color: #fff;
                 text-align: center;
                 height: 6vh;
+                letter-spacing: 1.5px;
+            }
+            .imgLogo{
+                width: 90px;
+                height: 90px;
             }
         }
     }
     figure{
         width: 50vw;
-        height: 70vh;
+        height: 100%;
         img{
             width: 100%;
             height: 100%;
-            border-radius: 10px 100px;
         }
     }
+
+
+@media (max-width: 800px){
+    .registroFormConteiner{
+        width: 75%;
+        height: 95%;
+        form{
+        width: 100%;
+        }
+    .imgBackground-registro{
+        display: none;
+    }
+}
+}
+
+@media (max-width: 500px){
+    .registroFormConteiner{
+        width: 95%;
+        form{
+        width: 100%;
+        }
+}
 }

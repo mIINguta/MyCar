@@ -1,15 +1,17 @@
 .labelForm{
     border-bottom: 1px solid;
     background-color: #DCDCDC;
-    padding: 3px 15px;
+    padding: 3px 10px;
+    width: 80%;
+    i{
+        width: 5%;
+    }
     input{
-        width: 20vw;
+        width: 95%;
         height: 4vh;
         border: transparent;
         background-color: transparent;
         color: #000;
-        margin-right: 2px;
         outline: none;
         }
-     
 }

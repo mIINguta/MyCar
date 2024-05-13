@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import LabelLoginComponent from "../components/LabelLoginComponent";
 import axios from "axios";
 import imgBackground from '../assets/background-toyota.jpg';
-
+import imgLogo from '../assets/logo-redonda.png';
 
 
 export default function Registro(){
@@ -31,8 +31,10 @@ const submitRegistro = async () =>{
         <>
         <section className="registro">
             <section className="registroFormConteiner">
-                <form action="post">
-                    <h1>REGISTRO</h1>
+                
+                    <form action="post">
+                    <img className="imgLogo" src={imgLogo} alt="Imagem da Logo MyCar" />
+                        <h1>Crie uma nova conta<span>.</span></h1>
                     <LabelLoginComponent
                     name = "email"
                     placeholder = "Email"
@@ -45,9 +47,9 @@ const submitRegistro = async () =>{
                     IClassName = "fa-solid fa-lock"
                     change = {handlePassword}
                     />
-                    <a onClick={submitRegistro}>REGISTRAR</a>
+                    <a onClick={submitRegistro}>Registrar</a>
                 </form>
-                <figure className="imgBackground">
+                <figure className="imgBackground-registro">
                     <img src={imgBackground} alt="Background Aplicação" />
                 </figure>
             </section>
