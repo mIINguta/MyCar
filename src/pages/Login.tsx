@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import LabelLoginComponent from '../components/LabelLoginComponent';
 import imgBackground from '../assets/background1.jpg';
 import axios from 'axios';
 import imgLogo from '../assets/logo-redonda.png';
-import { Link, Navigate, Routes, useNavigate} from 'react-router-dom';
-import isAuthenticated from '../auth';
+import {useNavigate} from 'react-router-dom';
+
+
 
 export default function Login(){
-let tokenAuth:any;
-const [usuario, setUsuario] = useState(0);
-const [password, setPassword] = useState(0);
-const navigate = useNavigate();
+const [usuario, setUsuario] = useState("");
+const [password, setPassword] = useState("");
+const navigate = useNavigate(); // uso para redirecionar a rota quando for válido o usuário
 
 const handleUsuario = (e:any) => {
 setUsuario(e.target.value)
@@ -18,19 +18,22 @@ setUsuario(e.target.value)
 const handlePassword = (e:any) => {
 setPassword(e.target.value)
 }
-
 const submitLogin = async () => {
     try{
         const response = await axios.post("http://localhost:5207/users/Login",{
                 'email': `${usuario}`,
                 'senha':`${password}`
-            });
-           tokenAuth = await response.data.token;
-           isAuthenticated(tokenAuth); 
-           isAuthenticated()? navigate('/login'): 'Deu ruim';
-        }
-            catch(error){
-            console.log(error);
+            }
+        ).then( response =>{
+                const token = response.data.token;
+                sessionStorage.setItem('tokenAuth', token);
+                sessionStorage.setItem('userToken', usuario);
+                navigate('/auth/entrar'); // partindo para rota se for válido
+        }) 
+        }catch(error){
+            console.log('Erro 404');
+            sessionStorage.removeItem('tokenAuth');
+            sessionStorage.removeItem('userToken');
     }
 } 
     return(
@@ -52,7 +55,8 @@ const submitLogin = async () => {
                     IClassName = "fa-solid fa-lock"
                     change = {handlePassword}
                     />
-                        <a className='btn-entrar' onClick={submitLogin}>Entrar</a>
+                    <a className='btn-entrar'
+                    onClick={submitLogin}>Entrar</a>
                     <div className="buttons">
                         <a href="">Esqueci minha senha</a>
                         <a href="/registro">Registre-se</a>
