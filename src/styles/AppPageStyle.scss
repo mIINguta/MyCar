@@ -1,4 +1,5 @@
 $backcolor:#354545;
+$border-black-color:#131818;
 
 @mixin position($display, $justify-content, $align-items, $flex-direction){
     display: $display;
@@ -9,7 +10,95 @@ $backcolor:#354545;
 
 .conteiner-AppPage{
     background-color: $backcolor;
-    @include position(flex, space-around, center, row);
+    @include position(flex, space-between, center, row);
     height: 100vh;
+    width: 100vw;
+    .sec-home{
+        @include position(flex, start, right, column);
+        padding: 10px 0px 10px 20px;
+        width: 100%;
+        height: 100%;
+        color:#fff;
+        gap: 15px;
+
+    }
+
+.sec-carros, .sec-manutencoes{
+    @include position(flex,left, center, row);;
+    width: 100%;
+    height: auto;
+    gap: 20px;
+    
+    figure{
+            width: 100%;
+            height: 100%;
+            img{
+                width: 100%;
+                height: 100%;
+            }
+        }
+}
+
+.div-manutencoes{
+    padding: 5px; 
+}
+    .div-carros, .div-manutencoes{
+        @include position(flex,space-around,right, column);
+        width: 20vw;
+        height: 100%;
+        background-color: #131818;
+        border-radius: 10px;
+
+    .info{
+        @include position(flex,space-around,right, column);
+        gap: 10px;
+        letter-spacing: 1px;
+        padding: 4px 5px;
+        height: auto;
+
+        .kilometragem{
+            color:#696969;
+
+        }
+        .modelo{
+            color: #FFD700;
+        }
+        
+    }
+}
+
+.atalhos{
+ @include position(flex, flex-start, left, column);
+    width: 40vw;
+    height: 100vh;
+    color: #fff;
+    gap: 15px;
+    padding-top: 20px;
+
+    h2{
+        font-size: 1.5em
+    }
+    
+    .info-rapidas{
+        @include position(flex, flex-start, right, column);
+        width: 100%;
+        height: 20vh;
+        gap: 5px;
+        padding: 10px;       
+        background-color: #131818;
+        border-radius: 10px;
+        .produto{
+            color:#FFD700;
+        }
+        .KM-troca{
+            color:green;
+        }
+        .KM-max{
+            color: red;
+        }
+
+    }
+
+}
 }
 
