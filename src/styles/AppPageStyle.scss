@@ -13,6 +13,15 @@ $border-black-color:#131818;
     @include position(flex, space-between, center, row);
     height: 100vh;
     width: 100vw;
+
+    
+}
+.loading{
+    display: none
+}
+.loaded{
+    display: flex;
+}
     .sec-home{
         @include position(flex, start, right, column);
         padding: 10px 0px 10px 20px;
@@ -20,7 +29,6 @@ $border-black-color:#131818;
         height: 100%;
         color:#fff;
         gap: 15px;
-
     }
 
 .sec-carros, .sec-manutencoes{
@@ -48,7 +56,7 @@ $border-black-color:#131818;
         height: 100%;
         background-color: #131818;
         border-radius: 10px;
-
+    }
     .info{
         @include position(flex,space-around,right, column);
         gap: 10px;
@@ -65,7 +73,6 @@ $border-black-color:#131818;
         }
         
     }
-}
 
 .atalhos{
  @include position(flex, flex-start, left, column);
@@ -78,7 +85,7 @@ $border-black-color:#131818;
     h2{
         font-size: 1.5em
     }
-    
+}
     .info-rapidas{
         @include position(flex, flex-start, right, column);
         width: 100%;
@@ -98,7 +105,30 @@ $border-black-color:#131818;
         }
 
     }
+@media (max-width:800px){
 
-}
-}
+    .conteiner-AppPage{
+        flex-direction: column;
+        height: auto; 
+        width: 100vw;
+    }
+        .sec-home{
+            width: 100vw;
+        }
+        .sec-carros, .sec-manutencoes{ 
+            width: 100%;
+            height: 30vh;
+            overflow: scroll;
+        }
+        .div-carros, .div-manutencoes{
+            width: 50%;
+            height: 80%;
+            align-items: center;
+        figure{
+            width: 100%;
+            height: 100%;      
+        }
+        }
+
+    }
 

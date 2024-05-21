@@ -1,4 +1,4 @@
-import React, {useEffect, useState } from 'react';
+import React, {useState } from 'react';
 import LabelLoginComponent from '../components/LabelLoginComponent';
 import imgBackground from '../assets/background1.jpg';
 import axios from 'axios';
@@ -11,7 +11,6 @@ export default function Login(){
 const [usuario, setUsuario] = useState("");
 const [password, setPassword] = useState("");
 const navigate = useNavigate(); // uso para redirecionar a rota quando for válido o usuário
-
 const handleUsuario = (e:any) => {
 setUsuario(e.target.value)
 }
@@ -34,8 +33,9 @@ const submitLogin = async () => {
             console.log('Erro 404');
             sessionStorage.removeItem('tokenAuth');
             sessionStorage.removeItem('userToken');
-    }
+            sessionStorage.removeItem('user_id');
 } 
+}
     return(
         <>
         <section className="login">
@@ -55,6 +55,7 @@ const submitLogin = async () => {
                     IClassName = "fa-solid fa-lock"
                     change = {handlePassword}
                     />
+                    {/* <span>Ocorre um erro!</span> */}
                     <a className='btn-entrar'
                     onClick={submitLogin}>Entrar</a>
                     <div className="buttons">

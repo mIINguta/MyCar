@@ -1,6 +1,6 @@
 import Icon from '../assets/images/gustavo-icon.jpeg'
 
-export default function Aside(){
+export default function Aside(props:any){
     return (
         <>
         <aside className='aside-component'>
@@ -9,10 +9,10 @@ export default function Aside(){
                     <figure>
                         <img src={Icon} alt="" />
                     </figure>
-                    <h3>
+                    <p>
                     <span>Oi,</span> 
-                    <span className='nome-span'>Gustavo</span>
-                    </h3>
+                    <span className='nome-span'>{props.userName}</span>
+                    </p>
                 </div>
             <div className="buttons-aside">
                 <button><i className="fa-solid fa-house"></i> Home</button>

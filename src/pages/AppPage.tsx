@@ -2,12 +2,37 @@ import Aside from "../components/Aside"
 import Header from "../components/Header"
 import Ferrari from "../assets/images/ferrari-foto.jpg"
 import Gtr from "../assets/images/gtr-r34.jpg"
+import axios from "axios"
+import { useEffect, useState } from "react"
+import Loader from "../components/Loader"
 export default function App(){
+
+const [userName, setUserName] = useState('');
+const [carregando, setCarregando] = useState(true);
+
+useEffect(() =>{
+    const UserEmail:any = sessionStorage.getItem('userToken');
+        try{
+            const response = axios.get(`http://localhost:5207/users/ReceberDadosUsuario`, {
+                params:{
+                    email: UserEmail
+                }}).then(response =>{
+                    const resposta = response.data[0];
+                    setUserName(resposta.normalizedUserName);
+                    sessionStorage.setItem('user_id', resposta.id);
+                    setCarregando(false);
+                });
+            }catch(error){
+                console.log(error);
+            }
+},[carregando])
+   
     return (
-        <>
-      
-        <section className="conteiner-AppPage">  
-            <Aside/>
+        <> 
+       {carregando && <Loader/>}
+        <section className={`conteiner-AppPage ${carregando ? 'loading' : 'loaded' }`}>   {/* lógica para puxar classe*/}
+            <Aside 
+            userName = {userName}/>
             <section className="sec-home">
                 <h2>Carros</h2>
             <section className="sec-carros">

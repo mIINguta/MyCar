@@ -13,31 +13,31 @@ $gold-span:#FFD700;
     gap: 15px;
     background-color: $button-color;
     height: 100vh;
-    width: 20vw;
+    width: 15vw;
     color: #fff;
     border: 1px solid $button-color;
     padding: 20px 0px;
-
-    .nome-span{
-        color: $gold-span;
-    }
-
+    
     .superior-section-aside{
         @include position(flex, space-between, center, column);
         width: 100%;
         gap: 15px;
-
         .info-user{
             padding: 10px;
             width:100%;
-
-            h3{
-                display: flex;
-                flex-wrap: wrap;
+            p{
                 width: 100%;
-                white-space: normal;
-                font-family: 1.1em;
+                word-wrap: break-word;
                 letter-spacing: 1px;
+                white-space: normal;
+                .nome-span{
+                    color: $gold-span;
+                    display: block;
+                    text-transform: lowercase;
+                    &::first-letter{
+                        text-transform: uppercase;
+                    }
+                }
             }
             figure{
                 width: 100%;
@@ -48,7 +48,6 @@ $gold-span:#FFD700;
                 border-radius: 50%
             }
         }
-       
     }
 }
     
@@ -56,20 +55,27 @@ $gold-span:#FFD700;
     }
     .buttons-aside, .button-logout-div{
         width: 100%;
-   
-    button{
-        @include position(flex, left, center, row);
-        width: 100%;
-        height: 5vh;
-        background-color: transparent;
-        border: none;
-        color: #fff;
-        gap: 10px;
-        padding-left: 10px;
-        cursor: pointer;
-        font-size: 1.1em;
-    } }
-    button:hover{
-        background-color:$button-color;
-        transition: 1.3s;
+        button{
+            @include position(flex, left, center, row);
+            width: 100%;
+            height: 5vh;
+            background-color: transparent;
+            border: none;
+            color: #fff;
+            gap: 10px;
+            padding-left: 10px;
+            cursor: pointer;
+            font-size: 1.1em;
+            
+            &:hover{
+            background-color:$backcolor;
+            transition: 1.3s;
+        }
+        } }
+        
+
+@media (max-width: 800px){
+    .aside-component{
+        display: none;
     }
+}
