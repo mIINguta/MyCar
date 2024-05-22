@@ -5,27 +5,46 @@ import Gtr from "../assets/images/gtr-r34.jpg"
 import axios from "axios"
 import { useEffect, useState } from "react"
 import Loader from "../components/Loader"
-export default function App(){
+import { useFetch } from "../hooks/useFetch"
+import internal from "stream"
 
+export default function App(){
 const [userName, setUserName] = useState('');
 const [carregando, setCarregando] = useState(true);
+const [userId, setUserId] = useState('');
+const [token, setToken]:any = useState('');
 
 useEffect(() =>{
     const UserEmail:any = sessionStorage.getItem('userToken');
-        try{
+            try{
             const response = axios.get(`http://localhost:5207/users/ReceberDadosUsuario`, {
                 params:{
                     email: UserEmail
                 }}).then(response =>{
                     const resposta = response.data[0];
                     setUserName(resposta.normalizedUserName);
+                    setUserId(resposta.id);
+                    setToken(sessionStorage.getItem('tokenAuth'));
                     sessionStorage.setItem('user_id', resposta.id);
                     setCarregando(false);
-                });
-            }catch(error){
+                })
+                }catch(error){
                 console.log(error);
+
             }
-},[carregando])
+},[]);
+
+type Carros = {
+    nome: string;
+    marca: string;
+    anoFabricacao: number;
+    kilometragem: number;
+    manutencoes: [];
+}
+
+const {data:carros} = useFetch<Carros[]>('http://localhost:5207/auth/ConsultarCarrosUsuario');
+
+
    
     return (
         <> 
@@ -36,21 +55,27 @@ useEffect(() =>{
             <section className="sec-home">
                 <h2>Carros</h2>
             <section className="sec-carros">
-                <div className="div-carros">
+                {carros?.map((carros:any) => {
+                    return (
+                    <div className="div-carros">
                     <figure>
                         <img src={Ferrari} alt="" />
                     </figure>
                     <div className="info">
                         <p>
-                            <span className="modelo">488, </span>
-                            <span> Ferrari </span>
+                            <span className="modelo">{carros.marca}</span>
+                            <span> {carros.nome}</span>
                             - 
                             <span> 2022 </span>
                         </p>
-                        <span className="kilometragem">140.000 km</span>
+                        {/* Inserir formatação depois */}
+                        <span className="kilometragem">{carros.kilometragem}km</span> 
                     </div>
                 </div>
-                <div className="div-carros">
+            )})}
+
+                
+                {/* <div className="div-carros">
                     <figure>
                         <img src={Gtr} alt="" />
                     </figure>
@@ -62,8 +87,9 @@ useEffect(() =>{
                             <span> 1999 </span>
                         </p>
                         <span className="kilometragem">155.000 km</span>
-                    </div>
-                </div>
+                    </div> 
+                </div>*/}
+                
 
             </section>
             <h2>Manutenções</h2>
