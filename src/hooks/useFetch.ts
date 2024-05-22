@@ -1,9 +1,15 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import {useContext, useEffect, useState } from "react";
+import { AuthContext } from "../Context/AuthContext";
+
+
+
 
 export function useFetch<T = unknown>(url:string){
     const [data, setData]:any = useState();
-    const userId = sessionStorage.getItem('user_id');
+    const [isFetching, setIsFetching] = useState(true);
+    const {userId} = useContext(AuthContext);
+
     const token = sessionStorage.getItem('tokenAuth');
     
     useEffect(()=>{
@@ -16,13 +22,16 @@ export function useFetch<T = unknown>(url:string){
                 }  
             }).then(response =>{
                 setData(response.data);
+                setIsFetching(false);
                 console.log(response.data);
+
         });
         }catch(error){
             console.log(error)
+            setIsFetching(true);
         }
-    }, [])
-
-    return { data }
+    }, [userId])
+    
+    return { data, isFetching }
 
 }

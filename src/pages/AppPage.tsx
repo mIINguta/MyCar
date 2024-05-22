@@ -1,18 +1,19 @@
 import Aside from "../components/Aside"
-import Header from "../components/Header"
 import Ferrari from "../assets/images/ferrari-foto.jpg"
-import Gtr from "../assets/images/gtr-r34.jpg"
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import Loader from "../components/Loader"
 import { useFetch } from "../hooks/useFetch"
-import internal from "stream"
+import { AuthContext } from "../Context/AuthContext"
 
 export default function App(){
+
 const [userName, setUserName] = useState('');
 const [carregando, setCarregando] = useState(true);
-const [userId, setUserId] = useState('');
 const [token, setToken]:any = useState('');
+
+const {userId, setUserId}:any = useContext(AuthContext);
+
 
 useEffect(() =>{
     const UserEmail:any = sessionStorage.getItem('userToken');
@@ -32,7 +33,7 @@ useEffect(() =>{
                 console.log(error);
 
             }
-},[]);
+},[userId]);
 
 type Carros = {
     nome: string;
@@ -42,10 +43,9 @@ type Carros = {
     manutencoes: [];
 }
 
-const {data:carros} = useFetch<Carros[]>('http://localhost:5207/auth/ConsultarCarrosUsuario');
 
+const {data:carros, isFetching} = useFetch<Carros[]>('http://localhost:5207/auth/ConsultarCarrosUsuario');
 
-   
     return (
         <> 
        {carregando && <Loader/>}
@@ -55,6 +55,7 @@ const {data:carros} = useFetch<Carros[]>('http://localhost:5207/auth/ConsultarCa
             <section className="sec-home">
                 <h2>Carros</h2>
             <section className="sec-carros">
+                {isFetching && <Loader/>}
                 {carros?.map((carros:any) => {
                     return (
                     <div className="div-carros">
@@ -65,8 +66,9 @@ const {data:carros} = useFetch<Carros[]>('http://localhost:5207/auth/ConsultarCa
                         <p>
                             <span className="modelo">{carros.marca}</span>
                             <span> {carros.nome}</span>
-                            - 
-                            <span> 2022 </span>
+                
+                          
+                            <span> {carros.anoFabricacao}</span>
                         </p>
                         {/* Inserir formatação depois */}
                         <span className="kilometragem">{carros.kilometragem}km</span> 
@@ -74,7 +76,7 @@ const {data:carros} = useFetch<Carros[]>('http://localhost:5207/auth/ConsultarCa
                 </div>
             )})}
 
-                
+
                 {/* <div className="div-carros">
                     <figure>
                         <img src={Gtr} alt="" />

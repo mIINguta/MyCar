@@ -1,14 +1,17 @@
-import React, {useContext, useEffect, useState } from "react";
+import React, {useState } from "react";
 import Login from "../pages/Login";
 import Registro from "../pages/Registro";
 import AppPage from "../pages/AppPage"
 import { Route, BrowserRouter,Routes} from 'react-router-dom';
 import { PrivateRoute } from "./PrivateRoute";
+import { AuthContext } from "../Context/AuthContext";
 
 const AppRoutes = () => {
-  
+  const [userId, setUserId] = useState('');
+
   return (
   <BrowserRouter>
+  <AuthContext.Provider value={{userId, setUserId}}>
     <Routes>
         <Route path="/" element={<Login/>} />
         <Route path="/registro" element={<Registro/>}/>
@@ -17,8 +20,8 @@ const AppRoutes = () => {
               <AppPage/>
             </PrivateRoute>
         } />
-        
     </Routes>
+    </AuthContext.Provider>
   </BrowserRouter>
 )
 }
