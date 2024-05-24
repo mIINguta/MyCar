@@ -8,10 +8,12 @@ import { AuthContext } from "../Context/AuthContext";
 
 const AppRoutes = () => {
   const [userId, setUserId] = useState('');
+  const [userToken, setUserToken] = useState('');
+  const [userEmail, setUserEmail] = useState('')
 
   return (
   <BrowserRouter>
-  <AuthContext.Provider value={{userId, setUserId}}>
+  <AuthContext.Provider value={{userId, setUserId, userEmail, setUserEmail, userToken, setUserToken}}>
     <Routes>
         <Route path="/" element={<Login/>} />
         <Route path="/registro" element={<Registro/>}/>

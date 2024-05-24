@@ -1,15 +1,17 @@
-import React, {useState } from 'react';
+import React, {useContext, useState } from 'react';
 import LabelLoginComponent from '../components/LabelLoginComponent';
 import imgBackground from '../assets/background1.jpg';
 import axios from 'axios';
 import imgLogo from '../assets/logo-redonda.png';
 import {useNavigate} from 'react-router-dom';
-
+import { AuthContext } from '../Context/AuthContext';
 
 
 export default function Login(){
 const [usuario, setUsuario] = useState("");
 const [password, setPassword] = useState("");
+const {setUserToken, setUserEmail}:any = useContext(AuthContext);
+
 const navigate = useNavigate(); // uso para redirecionar a rota quando for válido o usuário
 const handleUsuario = (e:any) => {
 setUsuario(e.target.value)
@@ -23,8 +25,10 @@ const submitLogin = async () => {
                 'email': `${usuario}`,
                 'senha':`${password}`
             }
-        ).then( response =>{
+        ).then(response =>{
                 const token = response.data.token;
+                setUserToken(token);
+                setUserEmail(usuario);
                 sessionStorage.setItem('tokenAuth', token);
                 sessionStorage.setItem('userToken', usuario);
                 navigate('/auth/home'); // partindo para rota se for válido

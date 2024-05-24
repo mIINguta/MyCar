@@ -1,39 +1,41 @@
 import Aside from "../components/Aside"
 import Ferrari from "../assets/images/ferrari-foto.jpg"
 import axios from "axios"
-import { useContext, useEffect, useState } from "react"
+import { useCallback, useContext, useEffect, useState } from "react"
 import Loader from "../components/Loader"
 import { useFetch } from "../hooks/useFetch"
 import { AuthContext } from "../Context/AuthContext"
 
+
+
 export default function App(){
 
 const [userName, setUserName] = useState('');
-const [carregando, setCarregando] = useState(true);
-const [token, setToken]:any = useState('');
-
-const {userId, setUserId}:any = useContext(AuthContext);
+const [carregando, setCarregando]:any = useState();
+const {setUserId, userEmail}:any = useContext(AuthContext);
 
 
-useEffect(() =>{
-    const UserEmail:any = sessionStorage.getItem('userToken');
-            try{
-            const response = axios.get(`http://localhost:5207/users/ReceberDadosUsuario`, {
-                params:{
-                    email: UserEmail
-                }}).then(response =>{
-                    const resposta = response.data[0];
-                    setUserName(resposta.normalizedUserName);
-                    setUserId(resposta.id);
-                    setToken(sessionStorage.getItem('tokenAuth'));
-                    sessionStorage.setItem('user_id', resposta.id);
-                    setCarregando(false);
-                })
-                }catch(error){
-                console.log(error);
+async function ReceberDados(){
+    try{
+        const response = await axios.get(`http://localhost:5207/users/ReceberDadosUsuario`, {
+            params:{
+                email: (userEmail || sessionStorage.getItem('userToken'))
+            }}).then(response =>{
+                const resposta = response.data[0];
+                setUserName(resposta.normalizedUserName);
+                setUserId(resposta.id);
+                sessionStorage.setItem('user_id', resposta.id);
+        });
+            }catch(error){
+            console.log(error);
+            }finally{
+            setCarregando(false); 
+            };
+}
 
-            }
-},[userId]);
+    useEffect(() =>{ReceberDados()}, []);
+
+
 
 type Carros = {
     nome: string;
@@ -42,9 +44,18 @@ type Carros = {
     kilometragem: number;
     manutencoes: [];
 }
-
+type Manutencoes = {
+    id: number;
+    nome: string;
+    valor: number;
+    kmTroca: number;
+    kmMaximo: number;
+    id_carro: number;
+}
 
 const {data:carros, isFetching} = useFetch<Carros[]>('http://localhost:5207/auth/ConsultarCarrosUsuario');
+
+
 
     return (
         <> 
@@ -58,7 +69,7 @@ const {data:carros, isFetching} = useFetch<Carros[]>('http://localhost:5207/auth
                 {isFetching && <Loader/>}
                 {carros?.map((carros:any) => {
                     return (
-                    <div className="div-carros">
+                    <div className="div-carros" key={carros}>
                     <figure>
                         <img src={Ferrari} alt="" />
                     </figure>
@@ -126,8 +137,8 @@ const {data:carros, isFetching} = useFetch<Carros[]>('http://localhost:5207/auth
             <div className="info-rapidas">
                 <p><span>Veículo: </span><span>408</span></p>
                 <p><span className="produto">Produto: </span><span>Freios</span> </p>
-                <p className="KM-troca"><span>Km da troca:</span> <span>120.000km</span></p>
-                <p className="KM-max"><span>Km máxima:</span><span>150.000km</span></p>
+                <p ><span className="KM-troca">Km da troca:</span> <span>120.000km</span></p>
+                <p ><span className="KM-max">Km máxima:</span><span>150.000km</span></p>
             </div>
             <div className="info-rapidas">
                 <p><span>Veículo: </span><span>408</span></p>

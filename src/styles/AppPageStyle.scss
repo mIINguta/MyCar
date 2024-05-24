@@ -87,7 +87,7 @@ $border-black-color:#131818;
     }
 }
     .info-rapidas{
-        @include position(flex, flex-start, right, column);
+        @include position(flex,center, right, column);
         width: 100%;
         height: 20vh;
         gap: 5px;
