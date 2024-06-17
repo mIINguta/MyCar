@@ -2,18 +2,17 @@ import axios from "axios";
 import {useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Context/AuthContext";
 
-export function useFetch<T = unknown>(url:string){
+export function useFetch<T = unknown>(url:string, id:any, userToken:string){
     const [data, setData]:any = useState();
     const [isFetching, setIsFetching] = useState(true);
-    const {userId, userToken} = useContext(AuthContext);
-
     
+
 useEffect(()=>{
         async function getItems(){
         try{
            await axios.get(url, {
                 params:{
-                    id: (userId || sessionStorage.getItem('user_id'))},
+                    id: (id || sessionStorage.getItem('user_id'))},
                 headers: {
                     'Authorization': `Bearer ${userToken || sessionStorage.getItem('tokenAuth')} `
                 }  
@@ -28,7 +27,6 @@ useEffect(()=>{
         }
     } 
     getItems();
-
     }, [])
 
     return { data, isFetching }

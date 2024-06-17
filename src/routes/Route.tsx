@@ -1,7 +1,7 @@
 import React, {useState } from "react";
 import Login from "../pages/Login";
 import Registro from "../pages/Registro";
-import AppPage from "../pages/AppPage"
+import Principal from "../pages/Principal"
 import { Route, BrowserRouter,Routes} from 'react-router-dom';
 import { PrivateRoute } from "./PrivateRoute";
 import { AuthContext } from "../Context/AuthContext";
@@ -19,7 +19,7 @@ const AppRoutes = () => {
         <Route path="/registro" element={<Registro/>}/>
         <Route path="/auth/home" element={ 
             <PrivateRoute>
-              <AppPage/>
+              <Principal/>
             </PrivateRoute>
         } />
     </Routes>

@@ -1,19 +1,17 @@
 import Aside from "../components/Aside"
 import Ferrari from "../assets/images/ferrari-foto.jpg"
 import axios from "axios"
-import { useCallback, useContext, useEffect, useState } from "react"
+import {useContext, useEffect, useState} from "react"
 import Loader from "../components/Loader"
 import { useFetch } from "../hooks/useFetch"
 import { AuthContext } from "../Context/AuthContext"
-
-
 
 export default function App(){
 
 const [userName, setUserName] = useState('');
 const [carregando, setCarregando]:any = useState();
-const {setUserId, userEmail}:any = useContext(AuthContext);
-
+const {userId,setUserId, userToken, userEmail}:any = useContext(AuthContext);
+const {data:carros, isFetching:loadingCars} = useFetch('http://localhost:5207/auth/ConsultarCarrosUsuario', userId, userToken);
 
 async function ReceberDados(){
     try{
@@ -32,28 +30,8 @@ async function ReceberDados(){
             setCarregando(false); 
             };
 }
-
     useEffect(() =>{ReceberDados()}, []);
 
-
-
-type Carros = {
-    nome: string;
-    marca: string;
-    anoFabricacao: number;
-    kilometragem: number;
-    manutencoes: [];
-}
-type Manutencoes = {
-    id: number;
-    nome: string;
-    valor: number;
-    kmTroca: number;
-    kmMaximo: number;
-    id_carro: number;
-}
-
-const {data:carros, isFetching} = useFetch<Carros[]>('http://localhost:5207/auth/ConsultarCarrosUsuario');
 
 
 
@@ -66,65 +44,41 @@ const {data:carros, isFetching} = useFetch<Carros[]>('http://localhost:5207/auth
             <section className="sec-home">
                 <h2>Carros</h2>
             <section className="sec-carros">
-                {isFetching && <Loader/>}
-                {carros?.map((carros:any) => {
+                {loadingCars && <Loader/>}
+                {carregando? <Loader/> : carros?.map((carros:any) => { // só vai começar a carregar, depois do loading dos dados.
                     return (
                     <div className="div-carros" key={carros}>
                     <figure>
                         <img src={Ferrari} alt="" />
                     </figure>
-                    <div className="info">
+                        <div className="info">
                         <p>
                             <span className="modelo">{carros.marca}</span>
                             <span> {carros.nome}</span>
-                
-                          
                             <span> {carros.anoFabricacao}</span>
                         </p>
                         {/* Inserir formatação depois */}
                         <span className="kilometragem">{carros.kilometragem}km</span> 
-                    </div>
-                </div>
-            )})}
-
-
-                {/* <div className="div-carros">
-                    <figure>
-                        <img src={Gtr} alt="" />
-                    </figure>
-                    <div className="info">
-                        <p>
-                            <span className="modelo">R34, </span>
-                            <span> Nissan </span>
-                            - 
-                            <span> 1999 </span>
-                        </p>
-                        <span className="kilometragem">155.000 km</span>
-                    </div> 
-                </div>*/}
-                
-
-            </section>
+                        </div>
+                     </div>
+                )})}
+                    </section>
             <h2>Manutenções</h2>
+            {carros?.map((carros:any) => {
+                    return (
             <section className="sec-manutencoes">
               <div className="div-manutencoes">
                 <div className="info">
-                    
-                    <span className="modelo">R34 </span>
-                    <p>Troca de Óleo</p>
-                    <p>22/02/2024</p>
-                    <p>R$200,00</p>
+                    <span className="modelo">{carros.nome} </span>
+                    <p>{carros.manutencoes.nome}</p>
+                    <p>{carros.manutencoes.dataManutencao}</p>
+                    <p>R${carros.manutencoes.valor}</p>
+                    <p>Troca: {carros.manutencoes.kmTroca}km</p>
+                    <p>Próxima Troca: {carros.manutencoes.kmMax}km</p>
                 </div>
                 </div>
-                <div className="div-manutencoes">
-                <div className="info">
-                <span className="modelo">Ferrari </span>
-                    <p>Troca de Pneus</p>
-                    <p>22/04/2024</p>
-                    <p>R$1800,00</p>
-                </div>
-              </div>
             </section>
+    )}) }
         </section>
         <section className="atalhos">
             <h1>Próximas Revisões</h1>
@@ -149,8 +103,5 @@ const {data:carros, isFetching} = useFetch<Carros[]>('http://localhost:5207/auth
         </section>
        </section>
         </>
-
-           
-      
     )
 }
