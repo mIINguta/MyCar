@@ -1,6 +1,19 @@
+import { useNavigate } from 'react-router';
 import Icon from '../assets/images/gustavo-icon.jpeg'
 
+
 export default function Aside(props:any){
+const navigate = useNavigate();
+
+const logOut = () => {
+        sessionStorage.removeItem("user_id");
+        sessionStorage.removeItem("tokenAuth");
+        sessionStorage.removeItem("userToken");
+        navigate('/');
+}
+const cadastrar = () => {
+    navigate('auth/cadastrarCarro');
+}
     return (
         <>
         <aside className='aside-component'>
@@ -16,14 +29,13 @@ export default function Aside(props:any){
                 </div>
             <div className="buttons-aside">
                 <button><i className="fa-solid fa-house"></i> Home</button>
-                <button> <i className="fa-solid fa-pen-to-square"></i>Cadastrar</button>
+                <button onClick={cadastrar}> <i className="fa-solid fa-pen-to-square"></i>Cadastrar</button>
                 <button>
-                <i className="fa-solid fa-user-pen"></i>
-                Meus Dados</button>
+                <i className="fa-solid fa-user-pen"></i>Meus Dados</button>
             </div>
         </section>
         <div className="button-logout-div">
-            <button> <i className="fa-solid fa-arrow-right-from-bracket"></i>Log Out</button>
+            <button onClick={logOut}> <i className="fa-solid fa-arrow-right-from-bracket"></i>Log Out</button>
         </div>
         </aside>
         </>

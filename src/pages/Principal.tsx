@@ -3,19 +3,19 @@ import Ferrari from "../assets/images/ferrari-foto.jpg"
 import axios from "axios"
 import {useContext, useEffect, useState} from "react"
 import Loader from "../components/Loader"
-import { useFetch } from "../hooks/useFetch"
 import { AuthContext } from "../Context/AuthContext"
 
-export default function App(){
+export default function Principal(){
 
 const [userName, setUserName] = useState('');
 const [carregando, setCarregando]:any = useState();
 const {userId,setUserId, userToken, userEmail}:any = useContext(AuthContext);
-const {data:carros, isFetching:loadingCars} = useFetch('http://localhost:5207/auth/ConsultarCarrosUsuario', userId, userToken);
+const [cars, setCars]:any = useState();
+const [loadingCars, setLoadingCars] = useState(true);
 
 async function ReceberDados(){
     try{
-        const response = await axios.get(`http://localhost:5207/users/ReceberDadosUsuario`, {
+       await axios.get(`http://localhost:5207/users/ReceberDadosUsuario`, {
             params:{
                 email: (userEmail || sessionStorage.getItem('userToken'))
             }}).then(response =>{
@@ -28,12 +28,32 @@ async function ReceberDados(){
             console.log(error);
             }finally{
             setCarregando(false); 
-            };
+            getItems();
+    };
 }
-    useEffect(() =>{ReceberDados()}, []);
+async function getItems(){ 
+    try{
+       await axios.get('http://localhost:5207/auth/ConsultarCarrosUsuario', {
+            params:{
+                id: (userId || sessionStorage.getItem('user_id'))},
+            headers: {
+                'Authorization': `Bearer ${userToken || sessionStorage.getItem('tokenAuth')} `
+            }  
+        }).then(response =>{
+            setCars(response.data);
+            console.log(response.data);
+    });
+    }catch(error){
+        console.log(error);
+    }finally{
+        setLoadingCars(false);
+    }
 
+    return { cars, loadingCars}
+}
 
-
+useEffect(() =>{
+    ReceberDados()}, []);
 
     return (
         <> 
@@ -45,7 +65,7 @@ async function ReceberDados(){
                 <h2>Carros</h2>
             <section className="sec-carros">
                 {loadingCars && <Loader/>}
-                {carregando? <Loader/> : carros?.map((carros:any) => { // só vai começar a carregar, depois do loading dos dados.
+                {carregando? <Loader/> : cars?.map((carros:any) => { // só vai começar a carregar, depois do loading dos dados.
                     return (
                     <div className="div-carros" key={carros}>
                     <figure>
@@ -64,7 +84,7 @@ async function ReceberDados(){
                 )})}
                     </section>
             <h2>Manutenções</h2>
-            {carros?.map((carros:any) => {
+            {cars?.map((carros:any) => {
                     return (
             <section className="sec-manutencoes">
               <div className="div-manutencoes">
@@ -82,24 +102,17 @@ async function ReceberDados(){
         </section>
         <section className="atalhos">
             <h1>Próximas Revisões</h1>
-            <div className="info-rapidas">
-                <p><span>Veículo: </span><span>408</span></p>
-                <p><span className="produto">Produto: </span><span>Freios</span> </p>
-                <p className="KM-troca"><span>Km da troca:</span> <span>120.000km</span></p>
-                <p className="KM-max"><span>Km máxima:</span><span>150.000km</span></p>
-            </div>
-            <div className="info-rapidas">
-                <p><span>Veículo: </span><span>408</span></p>
-                <p><span className="produto">Produto: </span><span>Freios</span> </p>
-                <p ><span className="KM-troca">Km da troca:</span> <span>120.000km</span></p>
-                <p ><span className="KM-max">Km máxima:</span><span>150.000km</span></p>
-            </div>
-            <div className="info-rapidas">
-                <p><span>Veículo: </span><span>408</span></p>
-                <p><span className="produto">Produto: </span><span>Freios</span> </p>
-                <p className="KM-troca"><span>Km da troca:</span> <span>120.000km</span></p>
-                <p className="KM-max"><span>Km máxima:</span><span>150.000km</span></p>
-            </div>
+            {cars?.map((carros:any) =>{
+                return (
+                <div className="info-rapidas">
+                    <p><span>Veículo: </span><span>{carros.nome}</span></p>
+                    <p><span>Kilometragem Atual: </span><span>{carros.kilometragem}</span></p>
+                    <p><span className="produto">Produto: </span><span>{carros.manutencoes.nome}</span> </p>
+                    <p className="KM-troca"><span>Km da troca:</span> <span>{carros.manutencoes.kmTroca}</span></p>
+                    <p className="KM-max"><span>Km máxima:</span><span>{carros.manutencoes.kmMax}</span></p>
+                </div>
+                )
+            })}
         </section>
        </section>
         </>

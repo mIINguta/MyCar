@@ -5,6 +5,7 @@ import Principal from "../pages/Principal"
 import { Route, BrowserRouter,Routes} from 'react-router-dom';
 import { PrivateRoute } from "./PrivateRoute";
 import { AuthContext } from "../Context/AuthContext";
+import Cadastrar from "../pages/Cadastrar";
 
 const AppRoutes = () => {
   const [userId, setUserId] = useState('');
@@ -20,6 +21,11 @@ const AppRoutes = () => {
         <Route path="/auth/home" element={ 
             <PrivateRoute>
               <Principal/>
+            </PrivateRoute>
+        } />
+    <Route path="auth/cadastrarCarro" element={ 
+            <PrivateRoute>
+              <Cadastrar/>
             </PrivateRoute>
         } />
     </Routes>

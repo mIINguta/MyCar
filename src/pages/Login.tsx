@@ -31,7 +31,7 @@ const submitLogin = async () => {
                 setUserEmail(usuario);
                 sessionStorage.setItem('tokenAuth', token);
                 sessionStorage.setItem('userToken', usuario);
-                navigate('/auth/home'); // partindo para rota se for válido
+                navigate('auth/home'); // partindo para rota se for válido
         }) 
         }catch(error){
             console.log('Erro 404');
