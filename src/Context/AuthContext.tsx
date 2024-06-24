@@ -3,7 +3,9 @@ import { createContext} from "react";
 
  interface IAuthContext{
    userId: string;
-   setUserId: any;
+   setUserId: any; 
+   userName:string,
+   setUserName: any,
    userEmail: string;
    setUserEmail: any;
    userToken:string;

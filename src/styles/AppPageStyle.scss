@@ -13,8 +13,6 @@ $border-black-color:#131818;
     @include position(flex, space-between, center, row);
     height: 100vh;
     width: 100vw;
-
-    
 }
 .loading{
     display: none
