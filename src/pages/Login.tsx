@@ -8,13 +8,13 @@ import { AuthContext } from '../Context/AuthContext';
 
 
 export default function Login(){
-const [usuario, setUsuario] = useState("");
+const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
-const {setUserToken, setUserEmail}:any = useContext(AuthContext);
+const {setUserToken, setUserEmail, setUserId}:any = useContext(AuthContext);
 
 const navigate = useNavigate(); // uso para redirecionar a rota quando for válido o usuário
 const handleUsuario = (e:any) => {
-setUsuario(e.target.value)
+setEmail(e.target.value)
 }
 const handlePassword = (e:any) => {
 setPassword(e.target.value)
@@ -22,15 +22,15 @@ setPassword(e.target.value)
 const submitLogin = async () => {
     try{
         const response = await axios.post("http://localhost:5207/users/Login",{
-                'email': `${usuario}`,
+                'email': `${email}`,
                 'senha':`${password}`
             }
         ).then(response =>{
                 const token = response.data.token;
                 setUserToken(token);
-                setUserEmail(usuario);
+                setUserEmail(email);
                 sessionStorage.setItem('tokenAuth', token);
-                sessionStorage.setItem('userToken', usuario);
+                sessionStorage.setItem('userToken', email);
                 navigate('auth/home'); // partindo para rota se for válido
         }) 
         }catch(error){
@@ -38,6 +38,7 @@ const submitLogin = async () => {
             sessionStorage.removeItem('tokenAuth');
             sessionStorage.removeItem('userToken');
             sessionStorage.removeItem('user_id');
+            sessionStorage.removeItem('userName');
 } 
 }
     return(

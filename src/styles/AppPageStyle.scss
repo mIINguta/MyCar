@@ -23,7 +23,7 @@ $border-black-color:#131818;
     .sec-home{
         @include position(flex, start, right, column);
         padding: 10px 0px 10px 20px;
-        width: 100%;
+        width: 60%;
         height: 100%;
         color:#fff;
         gap: 15px;
@@ -73,7 +73,7 @@ $border-black-color:#131818;
     }
 
 .atalhos{
- @include position(flex, flex-start, left, column);
+ @include position(flex, flex-start, flex-end, column);
     width: 40vw;
     height: 100vh;
     color: #fff;
@@ -86,7 +86,7 @@ $border-black-color:#131818;
 }
     .info-rapidas{
         @include position(flex,center, right, column);
-        width: 100%;
+        width: 50%;
         height: 20vh;
         gap: 5px;
         padding: 10px;       

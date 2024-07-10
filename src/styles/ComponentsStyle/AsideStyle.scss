@@ -21,23 +21,30 @@ $gold-span:#FFD700;
     .superior-section-aside{
         @include position(flex, space-between, center, column);
         width: 100%;
-        gap: 15px;
+        gap: 10px;
         .info-user{
             padding: 10px;
             width:100%;
-            p{
-                width: 100%;
-                word-wrap: break-word;
-                letter-spacing: 1px;
-                white-space: normal;
+            div{
+                width: 100%;   
+                display: flex;
+                gap: 2px;
                 .nome-span{
                     color: $gold-span;
-                    display: block;
-                    text-transform: lowercase;
+                    background-color: transparent;
+                    width: 100%;
+                    border: none;
                     &::first-letter{
                         text-transform: uppercase;
                     }
-                }
+                   
+                } 
+                .editar{
+                        width: 20px;
+                        background-color: transparent;
+                        border: none;
+                        cursor: pointer;
+                    }
             }
             figure{
                 width: 100%;

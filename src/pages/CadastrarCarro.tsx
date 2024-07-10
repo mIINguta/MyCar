@@ -5,7 +5,7 @@ import LabelLoginComponent from "../components/LabelLoginComponent";
 import axios from "axios";
 
 export default function CadastrarCarro(){
-const {userEmail, userId, userToken}:any = useContext(AuthContext);
+const {userEmail, userId, userToken, userName}:any = useContext(AuthContext);
 const [modelo, setModelo] = useState("");
 const [montadora, setMontadora] = useState("");
 const [anoFabricacao, setAnoFabricacao] = useState("");
@@ -56,7 +56,7 @@ const cadCarro = async () =>{
     return (
         <>
         <section className="conteiner-cadcarros">
-        <Aside userName ={ userEmail}/>
+        <Aside userName ={ userName}/>
         <div className="div-form">
             <form action='post'>
                 <h1>Cadastre o seu carro <span>!</span></h1>

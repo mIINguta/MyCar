@@ -16,12 +16,15 @@ async function ReceberDados(){
     try{
        await axios.get(`http://localhost:5207/users/ReceberDadosUsuario`, {
             params:{
-                email: (userEmail || sessionStorage.getItem('userToken'))
+                email: (userEmail|| sessionStorage.getItem('userToken'))
             }}).then(response =>{
                 const resposta = response.data[0];
-                setUserEmail(resposta.normalizedUserName);
+                console.log(resposta);
+                setUserEmail(resposta.email);
+                setUserName(resposta.normalizedUserName);
                 setUserId(resposta.id);
                 sessionStorage.setItem('user_id', resposta.id);
+                sessionStorage.setItem('userName', resposta.normalizedUserName);
         });
             }catch(error){
             console.log(error);
@@ -84,7 +87,7 @@ useEffect(() =>{
                     </section>
             <h2>Manutenções</h2>
             <section className="sec-manutencoes" >
-            {cars?.map((carros:any, index:any) => {
+            {cars?.map((carros:any) => {
                 return (
                     // coloquei dois maps para mapear as manutencoes inseridas
                     carros.manutencoes?.map((manutencoes:any) =>{
@@ -100,8 +103,7 @@ useEffect(() =>{
                         </div>
                         </div>
                     )})
-                    )})}
-                 
+                    )})}        
             </section>
         </section>
         <section className="atalhos">

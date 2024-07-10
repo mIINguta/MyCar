@@ -6,6 +6,7 @@ import { Route, BrowserRouter,Routes} from 'react-router-dom';
 import { PrivateRoute } from "./PrivateRoute";
 import { AuthContext } from "../Context/AuthContext";
 import CadastrarCarro from "../pages/CadastrarCarro";
+import MeusDados from "../pages/MeuDados";
 
 const AppRoutes = () => {
   const [userId, setUserId] = useState('');
@@ -36,7 +37,7 @@ const AppRoutes = () => {
         } />
     <Route path="/auth/editarDados" element={ 
             <PrivateRoute>
-     
+                <MeusDados/>
             </PrivateRoute>
         } />
     </Routes>

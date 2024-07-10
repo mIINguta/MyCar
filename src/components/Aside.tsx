@@ -1,5 +1,8 @@
 import { useNavigate } from 'react-router';
 import Icon from '../assets/images/gustavo-icon.jpeg'
+import Pencil from '../assets/icons/pencil-solid.svg'
+import Check from '../assets/icons/check-solid.svg'
+import { useState } from 'react';
 
 export default function Aside(props:any){
 const navigate = useNavigate();
@@ -22,6 +25,14 @@ const cadastrarManutencao= () => {
 const editarDados= () => {
     navigate('/auth/editarDados');
 }
+const [ativo, setAtivo] = useState(false);
+
+const handleButtonEditName = () =>{    
+
+    ativo == false? setAtivo(true) : setAtivo(false)
+}
+
+
     return (
         <>
         <aside className='aside-component'>
@@ -30,10 +41,13 @@ const editarDados= () => {
                     <figure>
                         <img src={Icon} alt="" />
                     </figure>
-                    <p>
+                    <div>
                     <span>Oi,</span> 
-                    <span className='nome-span'>{props.userName}</span>
-                    </p>
+                    <input type="text" className='nome-span' value={props.userName} disabled = {ativo == false? true : false}/>
+                        <button className='editar' onClick={handleButtonEditName}>
+                            <img src={ativo == false? Pencil : Check } alt={ativo == false? "Botão editar" : "Botão confirmar"} />
+                        </button>
+                    </div>
                 </div>
             <div className="buttons-aside">
                 <button onClick={home}><i className="fa-solid fa-house"></i> <span>Home</span></button>
