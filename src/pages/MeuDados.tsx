@@ -15,10 +15,10 @@ const [passwordBDConfirm, setPasswordBDConfirm] = useState();
 const [message, setMessage] = useState("");
 const [carregando, setCarregando] = useState(true);
 
-const receberDados = async() =>{
+const receberDados = async () =>{
     await axios.get("http://localhost:5207/users/ReceberDadosUsuario", {
         params: {
-            email: userEmail? userEmail : sessionStorage.getItem('userToken')
+            usuario: userName || sessionStorage.getItem('userLogin')
         }
     }).then(result => {
         setUserNameBD(result.data.normalizedUserName);
@@ -65,13 +65,13 @@ useEffect(() =>{
                 <h1>Aqui estão seus dados <span>!</span></h1>
                     <LabelLoginComponent
                         name = "nome"
-                        placeholder = {sessionStorage.getItem('userName')}
+                        placeholder = {sessionStorage.getItem('userLogin')}
                         IClassName = "fa-solid fa-user"
                         change = {handleUserName}
                     />
                     <LabelLoginComponent
                     name = "email"
-                    placeholder = {sessionStorage.getItem('userToken')}
+                    placeholder = {sessionStorage.getItem('userEmail')}
                     IClassName = "fa-solid fa-envelope"
                     change = {handleUserEmail}
                     />

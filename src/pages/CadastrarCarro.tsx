@@ -12,6 +12,7 @@ const [anoFabricacao, setAnoFabricacao] = useState("");
 const [kilometragem, setKilometragem] = useState("");
 const [kilometragemAtual, setKilometragemAtual] = useState("");
 
+axios.defaults.headers.common = {'Authorization' : `Bearer ${userToken || sessionStorage.getItem('tokenAuth')}`}
 
 const handleModelo = (e:any) =>{
 setModelo(e.target.value);
@@ -40,10 +41,6 @@ const cadCarro = async () =>{
             'kilometragemAtual': `${kilometragemAtual}`,
             'idUsuario': `${(userId || sessionStorage.getItem('user_id'))}`,
             'manutencoes': []
-        }, {
-            headers: {
-                'Authorization': `Bearer ${userToken || sessionStorage.getItem('tokenAuth')} `
-            }
         }).then(
             response => response.data
         )}catch(error){

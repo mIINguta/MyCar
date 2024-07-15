@@ -2,9 +2,18 @@ import { useNavigate } from 'react-router';
 import Icon from '../assets/images/gustavo-icon.jpeg'
 import Pencil from '../assets/icons/pencil-solid.svg'
 import Check from '../assets/icons/check-solid.svg'
-import { useState } from 'react';
+import axios from 'axios';
+import { useContext, useState } from 'react';
+import { AuthContext } from '../Context/AuthContext';
+
+
 
 export default function Aside(props:any){
+const [newUserName, setNewUserName] = useState("");
+const {userId, userToken}:any = useContext(AuthContext);
+
+axios.defaults.headers.common = {'Authorization' : `Bearer ${userToken || sessionStorage.getItem('tokenAuth')}`}
+
 const navigate = useNavigate();
 
 const home = () =>{
@@ -27,11 +36,26 @@ const editarDados= () => {
 }
 const [ativo, setAtivo] = useState(false);
 
-const handleButtonEditName = () =>{    
-
-    ativo == false? setAtivo(true) : setAtivo(false)
+let isActive = (parm1:any, parm2:any) =>{
+    return ativo == false? parm1 : parm2
+} 
+const handleName = (e:any) =>{
+    setNewUserName(e.target.value);
 }
-
+const handleButtonEditName = () =>{    
+    ativo == false? setAtivo(true) : setAtivo(false);
+   
+    const enviarNome = async () =>{
+        try{
+        await axios.put(`http://localhost:5207/users/AtualizarNome?id=${userId}&name=${newUserName}`)
+        .then(response =>
+            console.log("Funcionou")
+        )}catch(error){
+            console.log(error)}
+        }
+        
+        newUserName == null || newUserName == undefined || newUserName == "" ? console.log("O Nome está vazio!") : enviarNome();
+}
 
     return (
         <>
@@ -43,9 +67,9 @@ const handleButtonEditName = () =>{
                     </figure>
                     <div>
                     <span>Oi,</span> 
-                    <input type="text" className='nome-span' value={props.userName} disabled = {ativo == false? true : false}/>
+                    <input type="text" className='nome-span' onChange = {handleName} defaultValue={props.userName} disabled={isActive (true, false)}/>
                         <button className='editar' onClick={handleButtonEditName}>
-                            <img src={ativo == false? Pencil : Check } alt={ativo == false? "Botão editar" : "Botão confirmar"} />
+                            <img src={isActive(Pencil, Check)} alt={isActive("Botão editar", "Botão confirmar")} title={isActive("Botão editar", "Botão confirmar")} />
                         </button>
                     </div>
                 </div>

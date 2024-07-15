@@ -11,12 +11,13 @@ const [carregando, setCarregando]:any = useState();
 const {userId,setUserId, userToken, userEmail, setUserEmail, userName, setUserName}:any = useContext(AuthContext);
 const [cars, setCars]:any = useState();
 const [loadingCars, setLoadingCars] = useState(true);
+axios.defaults.headers.common = {'Authorization' : `Bearer ${userToken || sessionStorage.getItem('tokenAuth')}`}
 
 async function ReceberDados(){
     try{
        await axios.get(`http://localhost:5207/users/ReceberDadosUsuario`, {
             params:{
-                email: (userEmail|| sessionStorage.getItem('userToken'))
+                usuario: (sessionStorage.getItem('userLogin'))
             }}).then(response =>{
                 const resposta = response.data[0];
                 console.log(resposta);
@@ -24,23 +25,22 @@ async function ReceberDados(){
                 setUserName(resposta.normalizedUserName);
                 setUserId(resposta.id);
                 sessionStorage.setItem('user_id', resposta.id);
-                sessionStorage.setItem('userName', resposta.normalizedUserName);
+                sessionStorage.setItem('userEmail', resposta.email);
+                
         });
             }catch(error){
             console.log(error);
             }finally{
             setCarregando(false); 
             getItems();
+            
     };
 }
 async function getItems(){ 
     try{
        await axios.get('http://localhost:5207/auth/ConsultarCarrosUsuario', {
             params:{
-                id: (userId || sessionStorage.getItem('user_id'))},
-            headers: {
-                'Authorization': `Bearer ${userToken || sessionStorage.getItem('tokenAuth')} `
-            }  
+                id: (userId || sessionStorage.getItem('user_id'))}
         }).then(response =>{
             setCars(response.data);
 

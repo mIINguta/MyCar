@@ -8,37 +8,38 @@ import { AuthContext } from '../Context/AuthContext';
 
 
 export default function Login(){
-const [email, setEmail] = useState("");
+const [userLogin, setUserLogin] = useState("");
 const [password, setPassword] = useState("");
-const {setUserToken, setUserEmail, setUserId}:any = useContext(AuthContext);
+const {setUserToken, setUserEmail, setUserName, setUserId}:any = useContext(AuthContext);
 
 const navigate = useNavigate(); // uso para redirecionar a rota quando for válido o usuário
 const handleUsuario = (e:any) => {
-setEmail(e.target.value)
+setUserLogin(e.target.value)
 }
 const handlePassword = (e:any) => {
 setPassword(e.target.value)
 }
 const submitLogin = async () => {
     try{
-        const response = await axios.post("http://localhost:5207/users/Login",{
-                'email': `${email}`,
+        await axios.post("http://localhost:5207/users/Login",{
+                'email': `${userLogin}`, // email pois a classe user c# pede email.
                 'senha':`${password}`
             }
         ).then(response =>{
                 const token = response.data.token;
                 setUserToken(token);
-                setUserEmail(email);
+                setUserName(userLogin);
                 sessionStorage.setItem('tokenAuth', token);
-                sessionStorage.setItem('userToken', email);
+                sessionStorage.setItem('userLogin', userLogin);
                 navigate('auth/home'); // partindo para rota se for válido
         }) 
         }catch(error){
             console.log('Erro 404');
             sessionStorage.removeItem('tokenAuth');
-            sessionStorage.removeItem('userToken');
+            sessionStorage.removeItem('userLogin');
             sessionStorage.removeItem('user_id');
             sessionStorage.removeItem('userName');
+            sessionStorage.removeItem('userEmail');
 } 
 }
     return(
