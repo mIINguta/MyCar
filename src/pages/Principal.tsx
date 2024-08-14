@@ -4,6 +4,7 @@ import axios from "axios"
 import {useContext, useEffect, useState} from "react"
 import Loader from "../components/Loader"
 import { AuthContext } from "../Context/AuthContext"
+import Cars from "../components/Cars"
 
 export default function Principal(){
 
@@ -11,6 +12,7 @@ const [carregando, setCarregando]:any = useState();
 const {userId,setUserId, userToken, userEmail, setUserEmail, userName, setUserName}:any = useContext(AuthContext);
 const [cars, setCars]:any = useState();
 const [loadingCars, setLoadingCars] = useState(true);
+
 axios.defaults.headers.common = {'Authorization' : `Bearer ${userToken || sessionStorage.getItem('tokenAuth')}`}
 
 async function ReceberDados(){
@@ -43,7 +45,6 @@ async function getItems(){
                 id: (userId || sessionStorage.getItem('user_id'))}
         }).then(response =>{
             setCars(response.data);
-
     });
     }catch(error){
         console.log(error);
@@ -68,23 +69,19 @@ useEffect(() =>{
                 {loadingCars && <Loader/>}
                 {carregando? <Loader/> : cars?.map((carros:any) => { // só vai começar a carregar, depois do loading dos dados.
                     return (
-                    <div className="div-carros" key={carros}>
-                    <figure>
-                        <img src={Ferrari} alt="" />
-                    </figure>
-                        <div className="info">
-                        <p>
-                            <span className="modelo">{carros.marca}</span>
-                            <span> {carros.nome}</span>
-                            <span> {carros.anoFabricacao}</span>
-                            
-                        </p>
-                        {/* Inserir formatação depois */}
-                        <span className="kilometragem">{carros.kilometragem}km</span> 
-                        </div>
-                     </div>
+                        <>
+                        <Cars 
+                        key = {carros}
+                        imagem = {Ferrari}
+                        marca = {carros.marca}
+                        nome = {carros.nome}
+                        anoFabricacao = {carros.anoFabricacao}
+                        kilometragem = {carros.kilometragem}
+                        show = {false}
+                        />
+                        </>
                 )})}
-                    </section>
+            </section>
             <h2>Manutenções</h2>
             <section className="sec-manutencoes" >
             {cars?.map((carros:any) => {

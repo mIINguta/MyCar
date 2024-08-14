@@ -48,29 +48,6 @@ $border-black-color:#131818;
 .div-manutencoes{
     padding: 5px; 
 }
-    .div-carros, .div-manutencoes{
-        @include position(flex,space-around,right, column);
-        width: 20vw;
-        height: 100%;
-        background-color: #131818;
-        border-radius: 10px;
-    }
-    .info{
-        @include position(flex,space-around,right, column);
-        gap: 10px;
-        letter-spacing: 1px;
-        padding: 4px 5px;
-        height: auto;
-
-        .kilometragem{
-            color:#696969;
-
-        }
-        .modelo{
-            color: #FFD700;
-        }
-        
-    }
 
 .atalhos{
  @include position(flex, flex-start, flex-end, column);

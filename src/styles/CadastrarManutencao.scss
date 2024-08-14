@@ -1,0 +1,33 @@
+@mixin position($display, $justify-content, $align-items, $flex-direction){
+    display: $display;
+    justify-content: $justify-content;
+    align-items: $align-items;
+    flex-direction: $flex-direction;
+}
+
+
+.conteiner-cadmanutencao{
+    @include position(flex, space-between, center, row);
+    width: 100vw;
+    gap: 5px;
+
+    h1{
+        color:#ffff;
+        font-weight: 400;
+    }
+
+
+    .escolha-carro{
+        @include position(flex, space-between, center, column);
+        width: 80%;
+        .carros{
+            display: flex;
+            gap: 10px;
+        }
+    }
+}
+.add-manutencao{
+    @include position(flex, space-between, center, column);
+    border: 1px solid red;
+
+}

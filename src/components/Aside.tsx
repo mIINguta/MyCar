@@ -29,7 +29,7 @@ const cadastrarCarro = () => {
     navigate('/auth/cadastrarCarro');
 }
 const cadastrarManutencao= () => {
-    navigate('/auth/registrarManutencao');
+    navigate('/auth/cadastrarManutencao');
 }
 const editarDados= () => {
     navigate('/auth/editarDados');

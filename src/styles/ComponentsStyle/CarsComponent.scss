@@ -1,0 +1,101 @@
+@mixin position($display, $justify-content, $align-items, $flex-direction){
+    display: $display;
+    justify-content: $justify-content;
+    align-items: $align-items;
+    flex-direction: $flex-direction;
+}
+
+.div-carros{
+    @include position(flex,space-around,right, column);
+    width: 20vw;
+    height: 100%;
+    background-color: #131818;
+    border-radius: 10px;
+
+    figure{
+        width: 100%;
+        img{
+            width: 100%;
+        }
+    }
+    .form-manutencao{
+        min-height: 90%;
+        min-width: 90%;
+        align-items: start;
+        margin-left: 5px;
+        margin-bottom: 5px;
+
+        label{
+            width: 95%;
+        }
+        .btn-cadastrar{
+            width: 10vw;
+            padding: 4px;
+            background-color: #131818;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+
+            &:hover{
+                border: 1px solid #696969;
+                transition: 1s;
+            }
+        }
+     
+    }
+
+    
+}
+    .info{
+    @include position(flex,space-around,right, column);
+    gap: 10px;
+    color: #ffff;
+    letter-spacing: 1px;
+    padding: 4px 5px;
+    height: auto;
+
+    .kilometragem{
+        color:#696969;
+
+    }
+    .modelo{
+        color: #FFD700;
+    }
+
+    button{
+        color: #01DF3A;
+        cursor: pointer;
+        font-size: 25px;
+        background-color: transparent;
+        border: none;
+        width: 4vw;
+        animation: pulse 3s infinite;
+
+
+
+        &:hover{
+           transition: 1s;
+        }
+    }
+    
+
+    @-webkit-keyframes pulse {
+        0% {
+          -webkit-transform: scale(1);
+          -webkit-filter: brightness(20%);
+        }
+        100% {
+          -webkit-transform: scale(1.1);
+          -webkit-filter: brightness(100%);
+        }
+      }
+
+
+       
+}
+.mostrar{
+    display: flex;
+}
+.esconder{
+    display: none;
+}
