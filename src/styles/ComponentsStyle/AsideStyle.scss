@@ -57,9 +57,7 @@ $gold-span:#FFD700;
         }
     }
 }
-    
-    
-    }
+}
     .buttons-aside, .button-logout-div{
         width: 100%;
         button{
@@ -83,6 +81,75 @@ $gold-span:#FFD700;
 
 @media (max-width: 800px){
     .aside-component{
-        display: none;
+        display: flex;
+        width: 10vw;
+        justify-content: space-around;
+        transition: 1s;
+
+        &:hover{
+           width: 50vw;
+           transition: 1s;
+
+           .superior-section-aside{
+            .info-user{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                div{
+                    display: flex;
+                    justify-content: center;
+                    .nome-span{
+                        width: 20vw;
+                    }
+                }
+                }
+            }
+           
+        }
+        
+
+        .superior-section-aside {
+            height: auto;
+
+            .info-user{
+                width: auto;
+                justify-content: center;
+                div{
+                    display: none;
+                    flex-wrap: wrap;
+                    gap:5px;
+                    span{
+                        display: flex;
+                        align-items: center;
+                    }
+                    .nome-span{
+                        width: auto;
+                        font-size: 0.9em;
+                    }
+                    .editar{
+                        width: 15px;
+                        margin-right: 5px;
+                    }
+                }
+            }
+            .info-user{
+                figure{
+                    width: auto;
+                }
+            }
+        }
+    }
+
+    .buttons-aside, .button-logout-div{
+        width: auto;
+        button{
+            width: auto;
+            padding-right: 10px;
+
+
+            span{
+                display: none;
+            }
+        }
     }
 }

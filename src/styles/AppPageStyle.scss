@@ -10,7 +10,7 @@ $border-black-color:#131818;
 
 .conteiner-AppPage{
     background-color: $backcolor;
-    @include position(flex, space-between, center, row);
+    @include position(flex, none, flex-start, row);
     height: 100vh;
     width: 100vw;
 }
@@ -27,6 +27,8 @@ $border-black-color:#131818;
         height: 100%;
         color:#fff;
         gap: 15px;
+        overflow-x: hidden;
+        overflow-y: scroll;
     }
 
 .sec-carros, .sec-manutencoes{
@@ -50,21 +52,25 @@ $border-black-color:#131818;
 }
 
 .atalhos{
- @include position(flex, flex-start, flex-end, column);
-    width: 40vw;
-    height: 100vh;
+ @include position(flex, flex-start, flex-end, row);
+ display: disabled;
+    flex-wrap: wrap;
+    width: auto;
     color: #fff;
-    gap: 15px;
+    gap: 5%;
     padding-top: 20px;
+    border: 1px solid red;
 
     h2{
-        font-size: 1.5em
+        font-size: 1.5em;
+        width: 100%;
     }
 }
     .info-rapidas{
-        @include position(flex,center, right, column);
-        width: 50%;
-        height: 20vh;
+        @include position(flex,flex-start, right, column);
+        width: 40%;
+        
+        height: auto;
         gap: 5px;
         padding: 10px;       
         background-color: #131818;
@@ -83,27 +89,31 @@ $border-black-color:#131818;
 @media (max-width:800px){
 
     .conteiner-AppPage{
-        flex-direction: column;
-        height: auto; 
-        width: 100vw;
+        flex-direction: row;
     }
         .sec-home{
             width: 100vw;
-        }
+            flex-wrap: wrap;
+            padding: 10px;
+        
         .sec-carros, .sec-manutencoes{ 
             width: 100%;
             height: 30vh;
-            overflow: scroll;
+         
+            align-items: flex-start;
         }
-        .div-carros, .div-manutencoes{
+        .div-manutencoes{
+            flex-wrap: wrap;
+        }
+        .div-carros, .div-manutencoes, .info-rapidas{
             width: 50%;
-            height: 80%;
-            align-items: center;
+            height: auto;
+    
         figure{
             width: 100%;
             height: 100%;      
         }
         }
-
+}
     }
 

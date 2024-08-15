@@ -103,8 +103,9 @@ useEffect(() =>{
                     )})}        
             </section>
         </section>
-        <section className="atalhos">
-            <h1>Próximas Revisões</h1>
+        
+        {/* <section className="atalhos">
+            <h2>Próximas Revisões</h2>
             {cars?.map((carros:any) =>{
                 return (
                 <div className="info-rapidas" key={carros}>
@@ -116,7 +117,7 @@ useEffect(() =>{
                 </div>
                 )
             })}
-        </section>
+        </section> */}
        </section>
     </>
     )
