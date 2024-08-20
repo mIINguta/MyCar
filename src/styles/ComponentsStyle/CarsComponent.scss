@@ -21,29 +21,41 @@
     .form-manutencao{
         min-height: 90%;
         min-width: 90%;
-        align-items: start;
-        margin-left: 5px;
+        align-items: center;
         margin-bottom: 5px;
 
         label{
             width: 95%;
+            border-radius: 5px;
         }
         .btn-cadastrar{
-            width: 10vw;
+            width: 95%;
             padding: 4px;
             background-color: #131818;
-            color: #fff;
+            color:#fff;
+            font-size: 1.1em;
             border: none;
+            border-radius: 5px;
             cursor: pointer;
 
             &:hover{
-                border: 1px solid #696969;
+                background-color: #DCDCDC;;
                 transition: 1s;
+                color: #000;
             }
         }
      
     }
 
+    .buttons{
+        justify-content: flex-end;
+        width: 100%;
+        padding-right: 10px;
+
+        button{
+            width: 15px;
+        }
+    }
     
 }
     .info{
@@ -52,8 +64,10 @@
     color: #ffff;
     letter-spacing: 1px;
     padding: 4px 5px;
-    height: auto;
 
+    .buttons{
+
+    }
     .kilometragem{
         color:#696969;
 
@@ -62,7 +76,7 @@
         color: #FFD700;
     }
 
-    button{
+    .add-manutencao{
         color: #01DF3A;
         cursor: pointer;
         font-size: 25px;
@@ -70,8 +84,6 @@
         border: none;
         width: 4vw;
         animation: pulse 3s infinite;
-
-
 
         &:hover{
            transition: 1s;
@@ -89,9 +101,6 @@
           -webkit-filter: brightness(100%);
         }
       }
-
-
-       
 }
 .mostrar{
     display: flex;

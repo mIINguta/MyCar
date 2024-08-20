@@ -42,8 +42,12 @@ const cadCarro = async () =>{
             'idUsuario': `${(userId || sessionStorage.getItem('user_id'))}`,
             'manutencoes': []
         }).then(
-            response => response.data
-        )}catch(error){
+            response => {
+                response.data
+                window.alert("O cadastro foi realizado com sucesso!");
+            }
+        )}
+        catch(error){
             console.log('algo de errado aconteceu');
         }  
     
@@ -56,7 +60,7 @@ const cadCarro = async () =>{
         <Aside userName ={ userName}/>
         <div className="div-form">
             <form action='post'>
-                <h1>Cadastre o seu carro <span>!</span></h1>
+                <h1>Insira as informações do seu veículo</h1>
                     <LabelLoginComponent
                         name = "modelo"
                         placeholder = "Modelo"

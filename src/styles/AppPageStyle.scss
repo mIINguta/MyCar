@@ -8,6 +8,12 @@ $border-black-color:#131818;
     flex-direction: $flex-direction;
 }
 
+.editar, .excluir{
+    width: 20px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
 .conteiner-AppPage{
     background-color: $backcolor;
     @include position(flex, none, flex-start, row);
@@ -29,6 +35,10 @@ $border-black-color:#131818;
         gap: 15px;
         overflow-x: hidden;
         overflow-y: scroll;
+
+        ul{
+            list-style: none;
+        }
     }
 
 .sec-carros, .sec-manutencoes{
@@ -49,17 +59,40 @@ $border-black-color:#131818;
 
 .div-manutencoes{
     padding: 5px; 
+    justify-content: start;
+        .info{
+            @include position(flex,space-around,right, column);
+            gap: 10px;
+            letter-spacing: 1px;
+            padding: 4px 5px;
+             height: 100%;
+            .infos_buttons, .buttons {
+                display: flex;
+                justify-content: space-between;
+                .buttons{
+                    width: 30%;
+                    list-style: none;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+            }
+        span{
+            width: 50%;
+            display: inline;
+        }
+    }
 }
 
 .atalhos{
  @include position(flex, flex-start, flex-end, row);
- display: disabled;
+    display: disabled;
     flex-wrap: wrap;
     width: auto;
     color: #fff;
     gap: 5%;
     padding-top: 20px;
-    border: 1px solid red;
 
     h2{
         font-size: 1.5em;

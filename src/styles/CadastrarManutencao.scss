@@ -28,6 +28,22 @@
 }
 .add-manutencao{
     @include position(flex, space-between, center, column);
-    border: 1px solid red;
+}
 
+@media (max-width:800px){
+    .conteiner-cadmanutencao{
+        justify-content: center;
+
+        .escolha-carro{
+            width: 90%;
+           
+            .carros{
+                flex-direction: column; 
+                align-items: center;
+                .div-carros{
+                    width: 60%;
+                }
+            }
+        }
+    }
 }

@@ -5,6 +5,9 @@ import {useContext, useEffect, useState} from "react"
 import Loader from "../components/Loader"
 import { AuthContext } from "../Context/AuthContext"
 import Cars from "../components/Cars"
+import Pencil from '../assets/icons/pencil-solid.svg'
+import Check from '../assets/icons/check-solid.svg'
+import Trash from '../assets/icons/trash-solid.svg'
 
 export default function Principal(){
 
@@ -53,6 +56,29 @@ async function getItems(){
     }
     return { cars, loadingCars}
 }
+
+function eventButton(func:string, id:number){
+    switch(func){
+        case("editar"):{
+            return null
+        }
+        case("excluir"):{
+            if(window.confirm("Deseja excluir esse registro?")){
+                try{
+                axios.delete("http://localhost:5207/auth/DeletarManutencao",{
+                    params:{
+                        "id": id
+                    }
+                }).then(response =>{
+                    return window.alert("O registro da manutenção foi excluído com sucesso!");
+                })
+                }catch(error){
+                    return console.log(error);}
+            }
+        }
+    }
+}
+
 useEffect(() =>{
     ReceberDados()}, []);
 
@@ -78,6 +104,7 @@ useEffect(() =>{
                         anoFabricacao = {carros.anoFabricacao}
                         kilometragem = {carros.kilometragem}
                         show = {false}
+                        idCarro = {carros.id}
                         />
                         </>
                 )})}
@@ -91,7 +118,21 @@ useEffect(() =>{
                     return ( 
                         <div className="div-manutencoes" key={manutencoes.id} >
                         <div className="info" >
-                            <span className="modelo">{carros.nome} </span>
+                            <div className="infos_buttons">
+                                <span className="modelo">{carros.nome} </span>
+                                <ul className="buttons">
+                                    <li>
+                                        <button className='editar' onClick={() => eventButton('editar', manutencoes.id)}>
+                                            <img src={Pencil} alt="" title="" />
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button className='excluir' onClick={() => eventButton('excluir', manutencoes.id)}>
+                                            <img src={Trash} alt="" title="" />
+                                        </button>
+                                    </li>
+                                </ul>
+                        </div>
                             <p>{manutencoes.nome}</p>
                             <p>{manutencoes.dataManutencao}</p> 
                             <p>R${manutencoes.valor}</p>
@@ -121,4 +162,4 @@ useEffect(() =>{
        </section>
     </>
     )
-    }
+}

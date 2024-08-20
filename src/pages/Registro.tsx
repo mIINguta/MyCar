@@ -40,12 +40,14 @@ const submitRegistro = async () =>{
                     placeholder = "Email"
                     IClassName = "fa-solid fa-envelope"
                     change = {handleEmail}
+                    type="email"
                     />
                     <LabelLoginComponent
                     name = "senha"
                     placeholder = "Senha"
                     IClassName = "fa-solid fa-lock"
                     change = {handlePassword}
+                    type = "password"
                     />
                     <a onClick={submitRegistro}>Registrar</a>
                 </form>

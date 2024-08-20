@@ -10,6 +10,7 @@ import { AuthContext } from '../Context/AuthContext';
 export default function Login(){
 const [userLogin, setUserLogin] = useState("");
 const [password, setPassword] = useState("");
+const [msgErro, setMsgErro] = useState("");
 const {setUserToken, setUserEmail, setUserName, setUserId}:any = useContext(AuthContext);
 
 const navigate = useNavigate(); // uso para redirecionar a rota quando for válido o usuário
@@ -34,7 +35,7 @@ const submitLogin = async () => {
                 navigate('auth/home'); // partindo para rota se for válido
         }) 
         }catch(error){
-            console.log('Erro 404');
+            setMsgErro("Login Inválido. Por favor, verique suas credenciais.");
             sessionStorage.removeItem('tokenAuth');
             sessionStorage.removeItem('userLogin');
             sessionStorage.removeItem('user_id');
@@ -54,14 +55,16 @@ const submitLogin = async () => {
                         placeholder = "Usuario"
                         IClassName = "fa-solid fa-user"
                         change = {handleUsuario}
+                        type = "text"
                     />
                     <LabelLoginComponent
                     name = "senha"
                     placeholder = "Senha"
                     IClassName = "fa-solid fa-lock"
                     change = {handlePassword}
+                    type= "password"
                     />
-                    {/* <span>Ocorre um erro!</span> */}
+                    {msgErro ? <span>{msgErro}</span> : null}
                     <a className='btn-entrar'
                     onClick={submitLogin}>Entrar</a>
                     <div className="buttons">

@@ -1,8 +1,10 @@
-import { useContext, useState } from "react";
-
+import { useContext, useState, useRef } from "react";
+import Pencil from '../assets/icons/pencil-solid.svg'
+import Trash from '../assets/icons/trash-solid.svg'
 import LabelLoginComponent from "./LabelLoginComponent";
 import axios from "axios";
 import { AuthContext } from "../Context/AuthContext";
+
 
 export default function Cars(props:any){
     const {userToken} = useContext(AuthContext);
@@ -12,6 +14,7 @@ export default function Cars(props:any){
     const [dataManutencao, setDataManutencao] = useState("");
     const [kmDaTroca, setKMDaTroca] = useState(0);
     const [kmMaximo, setKMMaximo] = useState(0);
+    const carroRef:any = useRef();
     
     axios.defaults.headers.common = {'Authorization' : `Bearer ${userToken || sessionStorage.getItem('tokenAuth')}`}
 
@@ -33,7 +36,24 @@ export default function Cars(props:any){
         setKMDaTroca(e.target.value);
     }
 
-    console.log(props.id)
+
+    function deleteCar(idCarro:number){
+
+            if(window.confirm("Deseja excluir o respectivo veículo?")){
+                 try{
+                    axios.delete(`http://localhost:5207/auth/DeletarCarro/`,{
+                        params:{
+                            "id": idCarro
+                        }
+                    })
+                    .then(response => {
+                        window.alert(response? "O respectivo carro foi excluído!" :  null);
+                        window.location.reload();
+                    })}
+                    catch(error){
+                        console.log(error);
+                    }  
+    }}
 
 
     async function CadManutencao(id:number){
@@ -57,7 +77,7 @@ export default function Cars(props:any){
     
     return (
         <>
-        <div className='div-carros' key={props.key}>
+        <div className='div-carros' key={props.key} ref={carroRef}>
             <figure>
                 <img src={props.imagem} alt="" />
             </figure>
@@ -69,7 +89,21 @@ export default function Cars(props:any){
                 </p>
                         {/* Inserir formatação depois */}
                 <span className="kilometragem">{props.kilometragem}km</span> 
-                { props.show? <button title="Adicionar manutenção" onClick={() => setHandleClass(!handleClass)}> + </button> : null}
+                { props.show? <button className="add-manutencao" title="Adicionar manutenção" onClick={() => setHandleClass(!handleClass)}> + </button> : null}
+                {!props.show?  
+                    <ul className="buttons">
+                        <li>
+                            <button className='editar' >
+                                <img src={Pencil} alt="" title="" />
+                            </button>
+                        </li>
+                        <li>
+                            <button className='excluir' onClick={() => {deleteCar(props.idCarro)}}>
+                                <img src={Trash} alt="" title="" />
+                                {props.id}
+                            </button>
+                        </li>
+                    </ul> : null}
             </div> 
                 { props.show? 
                 <form className={`form-manutencao ${handleClass? 'mostrar' : 'esconder'}`}>
