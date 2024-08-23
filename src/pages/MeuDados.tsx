@@ -59,7 +59,7 @@ useEffect(() =>{
         <>
         {carregando && <Loader/>}
         <section className={`conteiner-meusdados ${carregando ? 'loading' : 'loaded' }`}>
-        <Aside userName = {userName}/>
+        <Aside userName = {userName || sessionStorage.getItem('userLogin')}/>
         <div className="div-form">
             <form action='post'>
                 <h1>Aqui estão seus dados <span>!</span></h1>

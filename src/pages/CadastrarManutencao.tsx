@@ -10,7 +10,6 @@ export default function CadastrarManutencao(){
 const {userEmail, userId, userToken, userName}:any = useContext(AuthContext);
 const [cars, setCars]:any = useState();
 const [loadingCars, setLoadingCars] = useState(true);
-const [showButton, setShowButton] = useState(false);
 
 function getCars(){
     try{
@@ -32,20 +31,15 @@ function getCars(){
     return (
         <>
         <section className="conteiner-cadmanutencao">
-            <Aside userName = {userName} />
+            <Aside userName = {userName || sessionStorage.getItem('userLogin')} />
             <section className="escolha-carro">
                 <h1>Escolha um veículo</h1>
                 <div className="carros">
-            {loadingCars? <Loader/> : cars?.map((carros:any, i:number) => {
+            {loadingCars? <Loader/> : cars?.map((carros:any) => {
                     return(
                     <Cars 
-                    key={carros + i++}
-                    imagem = {Ferrari}
-                    marca = {carros.marca}
-                    nome = {carros.nome}
-                    anoFabricacao = {carros.anoFabricacao}
-                    kilometragem = {carros.kilometragem}
-                    id = {carros.id}
+                    {...carros}
+                    imagem={Ferrari}
                     show = {true}
                     />      
             )})}

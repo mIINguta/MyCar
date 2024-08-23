@@ -6,42 +6,56 @@ import axios from "axios";
 
 export default function CadastrarCarro(){
 const {userEmail, userId, userToken, userName}:any = useContext(AuthContext);
-const [modelo, setModelo] = useState("");
-const [montadora, setMontadora] = useState("");
-const [anoFabricacao, setAnoFabricacao] = useState("");
-const [kilometragem, setKilometragem] = useState("");
-const [kilometragemAtual, setKilometragemAtual] = useState("");
+const [carro, setCarro] = useState({
+        id:0,
+        modelo: "",
+        marca:"",
+        placa:"",
+        anoFabricacao: 0,
+        quilometragemCompra: 0,
+        quilometragemAtual: 0,
+        idCarro: 0,
+        idUsuario:userId,
+        manutencoes:[]
+})
 
 axios.defaults.headers.common = {'Authorization' : `Bearer ${userToken || sessionStorage.getItem('tokenAuth')}`}
 
-const handleModelo = (e:any) =>{
-setModelo(e.target.value);
-}
-const handleMontadora = (e:any) =>{
-setMontadora(e.target.value);
-}
-const handleAnoFabricacao = (e:any) =>{
-setAnoFabricacao(e.target.value);
-}
-const handleKilometragem = (e:any) =>{
-setKilometragem(e.target.value);
-}
-const handleKilometragemAtual = (e:any) =>{
-setKilometragemAtual(e.target.value);
+function handleChange (e:any){
+    const name = e.target.name;
+    switch(name){
+        case "marca":{
+            setCarro({...carro, marca: (e.target.value)});
+            break;
+        }
+        case "modelo":{
+            setCarro({...carro, modelo: (e.target.value)});
+            break;
+        }
+        case "placa":{
+            setCarro({...carro, placa: (e.target.value)});
+            break;
+        }
+        case "anoFabricacao":{
+            setCarro({...carro, anoFabricacao: (e.target.value)});
+            break;
+        }
+        case "quilometragemCompra":{
+            setCarro({...carro, quilometragemCompra: (e.target.value)});
+            break;
+        }
+        case "quilometragemAtual":{
+            setCarro({...carro, quilometragemAtual: (e.target.value)});
+            break;
+        }
+    }
 }
 
 
 const cadCarro = async () =>{
     try{
-        await axios.post('http://localhost:5207/auth/RegistrarCarro', {
-            'nome': `${modelo}`,
-            'marca': `${montadora}`,
-            'anoFabricacao': `${anoFabricacao}`,
-            'kilometragem': `${kilometragem}`,
-            'kilometragemAtual': `${kilometragemAtual}`,
-            'idUsuario': `${(userId || sessionStorage.getItem('user_id'))}`,
-            'manutencoes': []
-        }).then(
+        await axios.post('http://localhost:5207/auth/RegistrarCarro', carro
+        ).then(
             response => {
                 response.data
                 window.alert("O cadastro foi realizado com sucesso!");
@@ -57,7 +71,7 @@ const cadCarro = async () =>{
     return (
         <>
         <section className="conteiner-cadcarros">
-        <Aside userName ={ userName}/>
+        <Aside userName ={userName || sessionStorage.getItem('userLogin')}/>
         <div className="div-form">
             <form action='post'>
                 <h1>Insira as informações do seu veículo</h1>
@@ -65,32 +79,38 @@ const cadCarro = async () =>{
                         name = "modelo"
                         placeholder = "Modelo"
                         IClassName = "fa-solid fa-user"
-                        change = {handleModelo}
+                        change = {handleChange}
                     />
                     <LabelLoginComponent
                     name = "marca"
                     placeholder = "Montadora"
                     IClassName = "fa-solid fa-lock"
-                    change = {handleMontadora}
+                    change = {handleChange}
+                    />
+                    <LabelLoginComponent
+                    name = "placa"
+                    placeholder = "Placa"
+                    IClassName = "fa-solid fa-lock"
+                    change = {handleChange}
                     />
                     
                     <LabelLoginComponent
                     name = "anoFabricacao"
                     placeholder = "Ano (Fabricação)"
                     IClassName = "fa-solid fa-lock"
-                    change = {handleAnoFabricacao}
+                    change = {handleChange}
                     />
                     <LabelLoginComponent
-                    name = "kilometragem"
+                    name = "quilometragemCompra"
                     placeholder = "Kilometragem (Compra)"
                     IClassName = "fa-solid fa-lock"
-                    change = {handleKilometragem}
+                    change = {handleChange}
                     />
                     <LabelLoginComponent
-                    name = "kilometragem"
+                    name = "quilometragemAtual"
                     placeholder = "Kilometragem (Atual)"
                     IClassName = "fa-solid fa-lock"
-                    change = {handleKilometragemAtual}
+                    change = {handleChange}
                     />
                     <a className="btn-entrar" onClick={cadCarro}>Cadastrar</a>
                 </form>

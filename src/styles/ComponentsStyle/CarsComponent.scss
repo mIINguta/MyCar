@@ -12,6 +12,12 @@
     background-color: #131818;
     border-radius: 10px;
 
+    .input-carros{
+        background-color: transparent;
+        color: #fff;
+        border-bottom: 1px solid #696969;
+    }
+
     figure{
         width: 100%;
         img{
@@ -66,7 +72,7 @@
     padding: 4px 5px;
 
     .buttons{
-
+        list-style: none;
     }
     .kilometragem{
         color:#696969;
@@ -74,6 +80,10 @@
     }
     .modelo{
         color: #FFD700;
+    }
+    .placa{
+        font-size: 0.8em;
+        color: #696969;
     }
 
     .add-manutencao{
