@@ -3,6 +3,7 @@ import Aside from "../components/Aside";
 import { AuthContext } from "../Context/AuthContext";
 import LabelLoginComponent from "../components/LabelLoginComponent";
 import axios from "axios";
+import { redirect } from "react-router";
 
 export default function CadastrarCarro(){
 const {userEmail, userId, userToken, userName}:any = useContext(AuthContext);
@@ -59,15 +60,13 @@ const cadCarro = async () =>{
             response => {
                 response.data
                 window.alert("O cadastro foi realizado com sucesso!");
+                redirect('http://localhost:5173/auth/home');
             }
         )}
         catch(error){
             console.log('algo de errado aconteceu');
-        }  
-    
+        }     
 }
-
-
     return (
         <>
         <section className="conteiner-cadcarros">

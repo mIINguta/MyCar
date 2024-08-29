@@ -1,7 +1,7 @@
 import Aside from "../components/Aside"
 import Ferrari from "../assets/images/ferrari-foto.jpg"
 import axios from "axios"
-import {useContext, useEffect, useState, useRef} from "react"
+import {useContext, useEffect, useState} from "react"
 import Loader from "../components/Loader"
 import { AuthContext } from "../Context/AuthContext"
 import Cars from "../components/Cars"
@@ -14,9 +14,8 @@ export default function Principal(){
 
 const [carregando, setCarregando]:any = useState();
 const {userId,setUserId, userToken, userEmail, setUserEmail, userName, setUserName}:any = useContext(AuthContext);
-const [cars, setCars]:any = useState();
+const [cars, setCars]:any = useState([]);
 const [loadingCars, setLoadingCars] = useState(true);
-
 
 axios.defaults.headers.common = {'Authorization' : `Bearer ${userToken || sessionStorage.getItem('tokenAuth')}`}
 
@@ -27,7 +26,6 @@ async function ReceberDados(){
                 usuario: (sessionStorage.getItem('userLogin'))
             }}).then(response =>{
                 const resposta = response.data[0];
-                console.log(resposta);
                 setUserEmail(resposta.email);
                 setUserName(resposta.normalizedUserName);
                 setUserId(resposta.id);
@@ -39,8 +37,7 @@ async function ReceberDados(){
             console.log(error);
             }finally{
             setCarregando(false); 
-            getItems();
-            
+            getItems();       
     };
 }
 async function getItems(){ 
@@ -58,9 +55,7 @@ async function getItems(){
     }
     return { cars, loadingCars}
 }
-
-
-
+console.log(cars);
 useEffect(() =>{
     ReceberDados()}, []);
 
@@ -70,6 +65,8 @@ useEffect(() =>{
         <section className={`conteiner-AppPage ${carregando ? 'loading' : 'loaded' }`}>   {/* lógica para puxar classe*/}
             <Aside 
             userName = {userName? userName : userEmail}/>
+            {cars.length != 0?
+            <>
             <section className="sec-home">
                 <h2>Carros</h2>
             <section className="sec-carros" >
@@ -80,28 +77,27 @@ useEffect(() =>{
                         <Cars 
                         {...carros}        
                         show = {false}
-                        imagem = {Ferrari}
-                        
-                        />
+                        imagem = {Ferrari} />
                         </>
-                )})}
+                            )})}
             </section>
             <h2>Manutenções</h2>
             <section className="sec-manutencoes" >
+            
             {cars?.map((carros:any) => {
                 return (
                     // coloquei dois maps para mapear as manutencoes inseridas
                     carros.manutencoes?.map((manutencoes:any) =>{
+                    
                     return ( 
-                    <>
                     <Manutencao
                     {...manutencoes}
                     carroNome = {carros.modelo}
                     />
 
-                    </>)})
+                    ) })
                     
-                )})}   
+                )})} 
             </section>
         </section>
         
@@ -119,6 +115,7 @@ useEffect(() =>{
                 )
             })}
         </section> */}
+        </> : <h1>Não existem informações cadastradas.</h1> }
        </section>
     </>
     )

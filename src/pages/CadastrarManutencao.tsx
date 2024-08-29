@@ -8,8 +8,9 @@ import Loader from "../components/Loader";
 
 export default function CadastrarManutencao(){
 const {userEmail, userId, userToken, userName}:any = useContext(AuthContext);
-const [cars, setCars]:any = useState();
+const [cars, setCars]:any = useState([]);
 const [loadingCars, setLoadingCars] = useState(true);
+const [message, setMessage] = useState("");
 
 function getCars(){
     try{
@@ -18,6 +19,7 @@ function getCars(){
                 id: (userId || sessionStorage.getItem('user_id'))}
         }).then(response =>{
                 setCars(response.data);
+                console.log(cars);
         })}
         catch(error){
             console.log(error);}  
@@ -30,21 +32,27 @@ function getCars(){
 
     return (
         <>
+        
         <section className="conteiner-cadmanutencao">
             <Aside userName = {userName || sessionStorage.getItem('userLogin')} />
-            <section className="escolha-carro">
+            <section className="escolha-carro"> 
+                {cars.length != 0?
+                <>
                 <h1>Escolha um veículo</h1>
                 <div className="carros">
             {loadingCars? <Loader/> : cars?.map((carros:any) => {
-                    return(
+                 return(
                     <Cars 
                     {...carros}
                     imagem={Ferrari}
                     show = {true}
-                    />      
-            )})}
-                </div>
-            </section>
+                    />)  })}
+                </div></>
+                : <h1>Não há registros de carros cadastrados!</h1> }
+            </section> 
+            
+            
+           
         </section>
         </>
     )

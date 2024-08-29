@@ -16,9 +16,14 @@ $border-black-color:#131818;
 }
 .conteiner-AppPage{
     background-color: $backcolor;
-    @include position(flex, none, flex-start, row);
+    @include position(flex, none, center, row);
     height: 100vh;
     width: 100vw;
+
+    h1{
+        color: #ffff;
+        margin-left: 10px;
+    }
 }
 .loading{
     display: none

@@ -12,7 +12,8 @@ export default function Cars(carroP:any, props:any){
     const {userToken} = useContext(AuthContext);
     const [handleClass, setHandleClass] = useState(false);
     const [message, setMessage]= useState("");
-
+    const [changeEdit, setChangeEdit] = useState(true);
+    
     const [manutencao, setManutencao] = useState({
         descricao: "",
         valor: 0,
@@ -22,16 +23,10 @@ export default function Cars(carroP:any, props:any){
         idCarro: carroP.id
     });
 
-    const [changeEdit, setChangeEdit] = useState(true);
+    
 
     const [carro, setCarro] = useState({ 
-        id: carroP.id,
-        modelo: carroP.modelo,
-        marca:carroP.marca,
-        placa:carroP.placa,
-        anoFabricacao: carroP.anoFabricacao,
-        quilometragemAtual: carroP.quilometragemAtual,
-        quilometragemCompra: carroP.quilometragemCompra
+        ...carroP
     });
 
     axios.defaults.headers.common = {'Authorization' : `Bearer ${userToken || sessionStorage.getItem('tokenAuth')}`}
@@ -176,7 +171,7 @@ export default function Cars(carroP:any, props:any){
                             </button>
                         </li>
                         <li>
-                            <button className='excluir' title="Excluir Veículo" onClick={() => {deleteCar}}>
+                            <button className='excluir' title="Excluir Veículo" onClick={deleteCar}>
                                 <img src={Trash} alt="Ícone Lixeira" title="" />
                                 {props.id}
                             </button>

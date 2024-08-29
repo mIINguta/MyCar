@@ -8,7 +8,6 @@ export default function Manutencao(manutencoes:any, props:any){
 
 const [changeEdit, setChangeEdit] = useState(true);
 const manutencaoRef = useRef(null);
-console.log(manutencoes);
 const[manutencao, setManutencao] = useState({
    ...manutencoes
 });
