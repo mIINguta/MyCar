@@ -111,8 +111,8 @@ const[manutencao, setManutencao] = useState({
                         <input type="text" value={manutencao.descricao} name="descricao" title="Insira uma descrição" onChange={handleChange}/>
                         <input type="text" value={manutencao.dataManutencao} name="dataManutencao" title="Insira a data" onChange={handleChange} />
                         <input type="text" value={manutencao.valor} name="valor" title="Insira o valor" onChange={handleChange} />
-                        <input type="text" value={manutencao.quilometragemAtual.toLocaleString()} name="kmTroca" title="Insira a kilometragem da troca" onChange={handleChange} />
-                        <input type="text" value={manutencao.quilometragemMaxima.toLocaleString()} name="kmMax" title="Insira a kilometragem da próxima troca" onChange={handleChange} />
+                        <input type="text" value={manutencao.quilometragemAtual} name="kmTroca" title="Insira a kilometragem da troca" onChange={handleChange} />
+                        <input type="text" value={manutencao.quilometragemMaxima} name="kmMax" title="Insira a kilometragem da próxima troca" onChange={handleChange} />
                     </>
                     }
                         </div>

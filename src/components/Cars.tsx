@@ -77,6 +77,30 @@ export default function Cars(carroP:any, props:any){
 
         }
     }
+    async function atualizarQuilometragem(){
+
+        console.log(parseInt(carro.id));
+        if(carro.quilometragemCompra <= carro.quilometragemAtual){
+           try{
+                await axios.put("http://localhost:5207/auth/AtualizarQuilometragem", null, {
+                        params: {
+                        id: carro.id,
+                        quilometragemAtual: carro.quilometragemAtual }
+
+           }).then(response => {
+                    console.log(response.data);
+                    window.alert("A quilometragem foi atualizada com sucesso!");
+                    location.reload();
+                })
+            }
+            catch(erro){
+                console.log(erro);
+            }
+        }
+        
+        else
+        window.alert("O valor informado é inválido");
+    }
 
     function eventButton (event:string){
         switch(event){
@@ -85,8 +109,10 @@ export default function Cars(carroP:any, props:any){
                 break;
             }
             case 'confirmar':{
-                setChangeEdit(true);
+                atualizarQuilometragem();
+                (carro.quilometragemAtual < carro.quilometragemCompra? null : setChangeEdit(true));
                 break;
+               
             }
         }
     }
@@ -105,6 +131,7 @@ export default function Cars(carroP:any, props:any){
                     })}
                     catch(error){
                         console.log(error);
+                        setChangeEdit(false);
                     }  
     }}
 
@@ -125,6 +152,8 @@ export default function Cars(carroP:any, props:any){
             }
         }
     }
+
+   
     
     return (
         <>
@@ -133,33 +162,28 @@ export default function Cars(carroP:any, props:any){
                 <img src={carroP.imagem} alt="" />
             </figure>
             <div className="info">
-                {changeEdit ? 
-                <>
                 <p>
                     <span className="modelo">{carro.marca}</span>
                     <span> {carro.modelo}</span>
                     <span> {carro.anoFabricacao}</span> 
                     <span className="placa"> ({carro.placa}) </span>
                 </p> 
+                {changeEdit ?
+                <>
                 <p>
-                    
                     <span className="kilometragem" title="Quilometragem de compra"> {carro.quilometragemCompra.toLocaleString()} km </span> 
                     -
                     <span className="kilometragem" title="Quilometragem atual"> {carro.quilometragemAtual.toLocaleString()} km </span>
                 </p>
-                    
-               
-                </>
-                :
-                <>
-                    <input type="text" className="input-carros" name ="marca" value={carro.marca} onChange={handleChange} />
-                    <input type="text" className="input-carros" name = "modelo" value={carro.modelo} onChange={handleChange}/>
-                    <input type="text"className="input-carros" name = "anoFabricacao" value={carro.anoFabricacao} onChange={handleChange}/>
-                    <input type="text" className="input-carros" name= "kmCompra" value={carro.quilometragemCompra} onChange={handleChange}/>
-                    <input type="text" className="input-carros" name= "kmAtual" value={carro.quilometragemAtual} onChange={handleChange}/>
+                 </>  
+                 :
+                 <>
+                 <span className="kilometragem" title="Quilometragem de compra"> {carro.quilometragemCompra.toLocaleString()} km </span> 
+                    -
+                 <input type="text" className="input-carros" name= "kmAtual" value={carro.quilometragemAtual} onChange={handleChange}/>
                 </>
                 }
-                        {/* Inserir formatação depois */}
+
                 
                 { carroP.show? <button className="add-manutencao" title="Adicionar manutenção" onClick={() => setHandleClass(!handleClass)}> + </button> : null}
                 

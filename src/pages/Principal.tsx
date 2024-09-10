@@ -12,7 +12,7 @@ import Manutencao from "../components/Manutencao"
 
 export default function Principal(){
 
-const [carregando, setCarregando]:any = useState();
+
 const {userId,setUserId, userToken, userEmail, setUserEmail, userName, setUserName}:any = useContext(AuthContext);
 const [cars, setCars]:any = useState([]);
 const [loadingCars, setLoadingCars] = useState(true);
@@ -36,7 +36,6 @@ async function ReceberDados(){
             }catch(error){
             console.log(error);
             }finally{
-            setCarregando(false); 
             getItems();       
     };
 }
@@ -55,23 +54,24 @@ async function getItems(){
     }
     return { cars, loadingCars}
 }
-console.log(cars);
+
 useEffect(() =>{
     ReceberDados()}, []);
 
     return (
         <> 
-       {carregando && <Loader/>}
-        <section className={`conteiner-AppPage ${carregando ? 'loading' : 'loaded' }`}>   {/* lógica para puxar classe*/}
+        {loadingCars && <Loader/>}
+        <section className={`conteiner-AppPage`}>   {/* lógica para puxar classe*/}
             <Aside 
             userName = {userName? userName : userEmail}/>
-            {cars.length != 0?
+            
+            {cars.length != 0? 
             <>
             <section className="sec-home">
                 <h2>Carros</h2>
             <section className="sec-carros" >
-                {loadingCars && <Loader/>}
-                {carregando? <Loader/> : cars?.map((carros:any) => { // só vai começar a carregar, depois do loading dos dados.
+                
+                {loadingCars? <Loader/> : cars?.map((carros:any) => { // só vai começar a carregar, depois do loading dos dados.
                     return (
                         <>
                         <Cars 
@@ -101,20 +101,40 @@ useEffect(() =>{
             </section>
         </section>
         
-        {/* <section className="atalhos">
-            <h2>Próximas Revisões</h2>
-            {cars?.map((carros:any) =>{
+        <section className="atalhos">
+            <h2>Próximas Revisões ❗❗</h2>
+            {cars?.map((carros:any, i:number) =>{
                 return (
-                <div className="info-rapidas" key={carros}>
-                    <p><span>Veículo: </span><span>{carros.nome}</span></p>
-                    <p><span>Kilometragem Atual: </span><span>{carros.kilometragem}</span></p>
-                    <p><span className="produto">Produto: </span><span>{carros.manutencoes.nome}</span> </p>
-                    <p className="KM-troca"><span>Km da troca:</span> <span>{carros.manutencoes.kmTroca}</span></p>
-                    <p className="KM-max"><span>Km máxima:</span><span>{carros.manutencoes.kmMax}</span></p>
-                </div>
+                    <>
+                    {/* verificar antes se existe alguma manutenção cadastrada */}
+                    {carros.manutencoes[i] == undefined ? 
+                        null 
+                        : 
+                        <>
+                        {(carros.manutencoes[i].quilometragemMaxima - carros.quilometragemAtual) > 1000? 
+                            <p>As manutenções se encontram no prazo!</p>
+                            :
+                            <>
+                            <div className="info-rapidas" key={carros.id}>
+                                <p><span>Veículo: </span><span>{carros.modelo}</span></p>
+                                <p><span>Placa: </span><span>{carros.placa}</span></p>
+                                <p><span>Quilometragem atual: </span><span>{carros.quilometragemAtual.toLocaleString()} km</span></p>
+                                <p><span className="produto">Descrição: </span>{carros.manutencoes[i].descricao} </p>
+                                <p>Quilometragem de <span className="KM-troca">troca: </span>{carros.manutencoes[i].quilometragemAtual.toLocaleString()} km</p>
+                                <p>Quilometragem <span className="KM-max">máxima: </span>{carros.manutencoes[i].quilometragemMaxima.toLocaleString()} km</p>
+                            </div>
+                            </>
+                        }
+                        </>
+                    }
+                   
+                  
+                
+                
+                </>
                 )
             })}
-        </section> */}
+        </section>
         </> : <h1>Não existem informações cadastradas.</h1> }
        </section>
     </>

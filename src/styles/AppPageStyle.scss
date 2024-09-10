@@ -16,7 +16,7 @@ $border-black-color:#131818;
 }
 .conteiner-AppPage{
     background-color: $backcolor;
-    @include position(flex, none, center, row);
+    @include position(flex, none, flex-start, row);
     height: 100vh;
     width: 100vw;
 
@@ -25,21 +25,16 @@ $border-black-color:#131818;
         margin-left: 10px;
     }
 }
-.loading{
-    display: none
-}
-.loaded{
-    display: flex;
-}
+
     .sec-home{
         @include position(flex, start, right, column);
-        padding: 10px 0px 10px 20px;
+        padding: 10px 10px 10px 20px;
         width: 60%;
         height: 100%;
         color:#fff;
         gap: 15px;
         overflow-x: hidden;
-        overflow-y: scroll;
+        border-right: 1px solid black;
 
         ul{
             list-style: none;
@@ -60,7 +55,11 @@ $border-black-color:#131818;
                 height: 100%;
             }
         }
-}
+
+       
+        } ::-webkit-scrollbar{
+            width: 0px;
+    }
 
 .div-manutencoes{
     padding: 5px; 
@@ -70,49 +69,45 @@ $border-black-color:#131818;
             gap: 10px;
             letter-spacing: 1px;
             padding: 4px 5px;
-             height: 100%;
+            height: 100%;
+             
             .infos_buttons, .buttons {
                 display: flex;
                 justify-content: space-between;
-                .buttons{
-                    width: 30%;
+            }.buttons{
+                    width: auto;
                     list-style: none;
-                    flex-direction: row;
                     align-items: center;
                     justify-content: center;
                 }
-
-            }
-        span{
-            width: 50%;
-            display: inline;
-        }
     }
 }
 
 .atalhos{
- @include position(flex, flex-start, flex-end, row);
-    display: disabled;
+ @include position(flex, flex-start, flex-start, column);
     flex-wrap: wrap;
-    width: auto;
+    width: 30%;
+    height:auto;
     color: #fff;
-    gap: 5%;
-    padding-top: 20px;
-
+    padding: 10px;
+    gap: 15px;
+    
     h2{
         font-size: 1.5em;
-        width: 100%;
+        text-align: center
     }
+
+    
 }
     .info-rapidas{
-        @include position(flex,flex-start, right, column);
-        width: 40%;
-        
+        @include position(flex,center, right, column);
+        width: 100%;
         height: auto;
-        gap: 5px;
-        padding: 10px;       
+        gap: 5px;  
         background-color: #131818;
         border-radius: 10px;
+        padding: 10px;
+
         .produto{
             color:#FFD700;
         }
@@ -130,28 +125,37 @@ $border-black-color:#131818;
         flex-direction: row;
     }
         .sec-home{
-            width: 100vw;
-            flex-wrap: wrap;
+            width: 60%;
             padding: 10px;
-        
+            flex-direction: column;
+            overflow: scroll;
         .sec-carros, .sec-manutencoes{ 
             width: 100%;
-            height: 30vh;
-         
             align-items: flex-start;
+            flex-direction: column;
         }
         .div-manutencoes{
             flex-wrap: wrap;
         }
         .div-carros, .div-manutencoes, .info-rapidas{
-            width: 50%;
+            width: 100%;
             height: auto;
-    
+
         figure{
             width: 100%;
             height: 100%;      
         }
-        }
-}
+        }}
+        .atalhos{
+            width: 40%;
+            transition: 1s;
+            height: 100%;
+        &:hover{
+            width: 80%;
+        }}
+    
+            
+    
+
     }
 

@@ -10,21 +10,20 @@ export default function CadastrarManutencao(){
 const {userEmail, userId, userToken, userName}:any = useContext(AuthContext);
 const [cars, setCars]:any = useState([]);
 const [loadingCars, setLoadingCars] = useState(true);
-const [message, setMessage] = useState("");
 
-function getCars(){
+
+async function getCars(){
     try{
-        axios.get('http://localhost:5207/auth/ConsultarCarrosUsuario', {
+        await axios.get('http://localhost:5207/auth/ConsultarCarrosUsuario', {
             params: {
                 id: (userId || sessionStorage.getItem('user_id'))}
         }).then(response =>{
                 setCars(response.data);
-                console.log(cars);
         })}
         catch(error){
             console.log(error);}  
         finally{
-            setLoadingCars(false);}
+           setLoadingCars(false);}
         return {cars, loadingCars}
         }
     useEffect(() =>{
@@ -32,7 +31,7 @@ function getCars(){
 
     return (
         <>
-        
+        {loadingCars && <Loader/>}
         <section className="conteiner-cadmanutencao">
             <Aside userName = {userName || sessionStorage.getItem('userLogin')} />
             <section className="escolha-carro"> 
