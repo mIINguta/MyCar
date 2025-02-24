@@ -7,6 +7,7 @@ import { PrivateRoute } from "./PrivateRoute";
 import { AuthContext } from "../Context/AuthContext";
 import CadastrarCarro from "../pages/CadastrarCarro";
 import MeusDados from "../pages/MeuDados";
+import CadastrarManutencao from "../pages/CadastrarManutencao";
 
 const AppRoutes = () => {
   const [userId, setUserId] = useState('');
@@ -30,9 +31,9 @@ const AppRoutes = () => {
               <CadastrarCarro/>
             </PrivateRoute>
         } />
-    <Route path="/auth/registrarManutencao" element={ 
+    <Route path="/auth/cadastrarManutencao" element={ 
             <PrivateRoute>
-             
+              <CadastrarManutencao/>
             </PrivateRoute>
         } />
     <Route path="/auth/editarDados" element={ 

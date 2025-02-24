@@ -29,7 +29,7 @@ const cadastrarCarro = () => {
     navigate('/auth/cadastrarCarro');
 }
 const cadastrarManutencao= () => {
-    navigate('/auth/registrarManutencao');
+    navigate('/auth/cadastrarManutencao');
 }
 const editarDados= () => {
     navigate('/auth/editarDados');
@@ -75,8 +75,8 @@ const handleButtonEditName = () =>{
                 </div>
             <div className="buttons-aside">
                 <button onClick={home}><i className="fa-solid fa-house"></i> <span>Home</span></button>
-                <button onClick={cadastrarCarro}> <i className="fa-solid fa-pen-to-square"></i><span>Cadastrar Carro</span></button>
-                <button onClick={cadastrarManutencao}> <i className="fa-solid fa-pen-to-square"></i><span>Registrar Manutenção</span></button>
+                <button onClick={cadastrarCarro}> <i className="fa-solid fa-car"></i><span>Cadastrar Carro</span></button>
+                <button onClick={cadastrarManutencao}> <i className="fa-solid fa-gear"></i><span>Registrar Manutenção</span></button>
                 <button onClick={editarDados}>
                 <i className="fa-solid fa-user-pen"></i><span>Meus Dados</span></button>
             </div>

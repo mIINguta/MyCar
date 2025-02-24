@@ -1,0 +1,120 @@
+@mixin position($display, $justify-content, $align-items, $flex-direction){
+    display: $display;
+    justify-content: $justify-content;
+    align-items: $align-items;
+    flex-direction: $flex-direction;
+}
+
+.div-carros{
+    @include position(flex,space-around,right, column);
+    width: 20vw;
+    height: 100%;
+    background-color: #131818;
+    border-radius: 10px;
+
+    .input-carros{
+        background-color: transparent;
+        color: #fff;
+        border-bottom: 1px solid #696969;
+    }
+
+    figure{
+        width: 100%;
+        img{
+            width: 100%;
+        }
+    }
+    .form-manutencao{
+        min-height: 90%;
+        min-width: 90%;
+        align-items: center;
+        margin-bottom: 5px;
+
+        label{
+            width: 95%;
+            border-radius: 5px;
+        }
+        .btn-cadastrar{
+            width: 95%;
+            padding: 4px;
+            background-color: #131818;
+            color:#fff;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+
+            &:hover{
+                background-color: #DCDCDC;;
+                transition: 1s;
+                color: #000;
+            }
+        }
+     
+    }
+
+    .buttons{
+        justify-content: flex-end;
+        width: 100%;
+        padding-right: 10px;
+
+        button{
+            width: 15px;
+        }
+    }
+    
+}
+    .info{
+    @include position(flex,space-around,right, column);
+    gap: 10px;
+    color: #ffff;
+    letter-spacing: 1px;
+    padding: 4px 5px;
+
+    .buttons{
+        list-style: none;
+    }
+    .kilometragem{
+        color:#696969;
+
+    }
+    .modelo{
+        color: #FFD700;
+    }
+    .placa{
+        font-size: 0.8em;
+        color: #696969;
+    }
+
+    .add-manutencao{
+        color: #01DF3A;
+        cursor: pointer;
+        font-size: 25px;
+        background-color: transparent;
+        border: none;
+        width: 4vw;
+        animation: pulse 3s infinite;
+
+        &:hover{
+           transition: 1s;
+        }
+    }
+    
+
+    @-webkit-keyframes pulse {
+        0% {
+          -webkit-transform: scale(1);
+          -webkit-filter: brightness(20%);
+        }
+        100% {
+          -webkit-transform: scale(1.1);
+          -webkit-filter: brightness(100%);
+        }
+      }
+}
+.mostrar{
+    display: flex;
+}
+.esconder{
+    display: none;
+}

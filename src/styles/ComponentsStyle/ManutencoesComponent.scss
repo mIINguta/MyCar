@@ -1,0 +1,21 @@
+@mixin position($display, $justify-content, $align-items, $flex-direction){
+    display: $display;
+    justify-content: $justify-content;
+    align-items: $align-items;
+    flex-direction: $flex-direction;
+}
+.div-manutencoes{
+    @include position(flex,none,right, column);
+    width: 20vw;
+    height: 100%;
+    background-color: #131818;
+    border-radius: 10px;
+
+            .kilometragem{
+                color:#696969;
+
+            }
+            .modelo{
+                color: #FFD700;
+            }
+        }

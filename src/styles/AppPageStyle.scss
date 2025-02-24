@@ -11,7 +11,7 @@
     display: flex;}
     .sec-home{
         @include position(flex, start, right, column);
-        padding: 10px 0px 10px 20px;
+        padding: 10px 10px 10px 20px;
         width: 60%;
         height: 100%;
         color:#fff;
@@ -46,10 +46,12 @@
         .modelo{
             color: #FFD700;}}
 .atalhos{
- @include position(flex, flex-start, flex-end, column);
-    width: 40vw;
-    height: 100vh;
+ @include position(flex, flex-start, flex-start, column);
+    flex-wrap: wrap;
+    width: 30%;
+    height:auto;
     color: #fff;
+    padding: 10px;
     gap: 15px;
     padding-top: 20px;
     h2{
@@ -62,6 +64,8 @@
         padding: 10px;       
         background-color: $border-black-color;
         border-radius: 10px;
+        padding: 10px;
+
         .produto{
             color:#FFD700;}
         .KM-troca{
