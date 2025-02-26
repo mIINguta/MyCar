@@ -1,0 +1,8 @@
+@mixin position($display, $justify-content, $align-items, $flex-direction){
+    display: $display;
+    justify-content: $justify-content;
+    align-items: $align-items;
+    flex-direction: $flex-direction;}
+$dark-gray: #202020;
+$green: #354545;
+$border-black-color:#131818;

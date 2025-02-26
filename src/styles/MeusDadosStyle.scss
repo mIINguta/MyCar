@@ -1,36 +1,19 @@
-@mixin position($display, $justify-content, $align-items, $flex-direction){
-    display: $display;
-    justify-content: $justify-content;
-    align-items: $align-items;
-    flex-direction: $flex-direction;
-}
-
+@use 'Variables' as *;
 .conteiner-meusdados{
     @include position(flex, space-between, center, row);
     width: 100vw;
     height: 100vh;
-
     .loading{
-        display: none
-    }
+        display: none;}
     .loaded{
-        display: flex;
-    }
-
+        display: flex;}
     .div-form{
         @include position(flex, center, center, row);
         width: 90%;
         height: 100%;
-        
-
         form{
             width: auto;
             h1{
-                color: #fff;
-            }
+                color: #fff;}
             a{
-                background-color: #131818;
-            }
-        }
-    }
-}
+                background-color: #131818;}}}}

@@ -1,89 +1,50 @@
-$backcolor:#354545;
-$border-black-color:#131818;
+@use 'Variables' as *;
 
-@mixin position($display, $justify-content, $align-items, $flex-direction){
-    display: $display;
-    justify-content: $justify-content;
-    align-items: $align-items;
-    flex-direction: $flex-direction;
-}
-
-.editar, .excluir{
-    width: 20px;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-}
 .conteiner-AppPage{
-    background-color: $backcolor;
-    @include position(flex, none, flex-start, row);
+    background-color: $green;
+    @include position(flex, space-between, center, row);
     height: 100vh;
-    width: 100vw;
-
-    h1{
-        color: #ffff;
-        margin-left: 10px;
-    }
-
-}
-
+    width: 100vw;}
+.loading{
+    display: none;}
+.loaded{
+    display: flex;}
     .sec-home{
         @include position(flex, start, right, column);
         padding: 10px 10px 10px 20px;
         width: 60%;
         height: 100%;
         color:#fff;
-        gap: 15px;
-        overflow-x: hidden;
-        border-right: 1px solid black;
-
-        ul{
-            list-style: none;
-        }
-    }
-
+        gap: 15px;}
 .sec-carros, .sec-manutencoes{
     @include position(flex,left, center, row);;
     width: 100%;
     height: auto;
     gap: 20px;
-    
     figure{
             width: 100%;
             height: 100%;
             img{
                 width: 100%;
-                height: 100%;
-            }
-        }
-
-       
-        } ::-webkit-scrollbar{
-            width: 0px;
-    }
-
+                height: 100%;}}}
 .div-manutencoes{
-    padding: 5px; 
-    justify-content: start;
-        .info{
-            @include position(flex,space-around,right, column);
-            gap: 10px;
-            letter-spacing: 1px;
-            padding: 4px 5px;
-            height: 100%;
-             
-            .infos_buttons, .buttons {
-                display: flex;
-                justify-content: space-between;
-            }.buttons{
-                    width: auto;
-                    list-style: none;
-                    align-items: center;
-                    justify-content: center;
-                }
-    }
-}
-
+    padding: 5px;}
+    .div-carros, .div-manutencoes{
+        @include position(flex,space-around,right, column);
+        width: 20vw;
+        height: 100%;
+        background-color: $border-black-color;
+        border-radius: 10px;}
+    .info{
+        @include position(flex,space-around,right, column);
+        gap: 10px;
+        letter-spacing: 1px;
+        padding: 4px 5px;
+        height: auto;
+        .kilometragem{
+            color:#696969;}
+        .modelo{
+            color: #FFD700;}}
 .atalhos{
  @include position(flex, flex-start, center, column);
     flex-wrap: wrap;
@@ -92,73 +53,41 @@ $border-black-color:#131818;
     color: #fff;
     padding: 10px;
     gap: 15px;
-    text-align: center;
-    
-    
+    padding-top: 20px;
     h2{
-        font-size: 1.5em;
-        text-align: center
-    }
-
-    
-}
+        font-size: 1.5em;}}
     .info-rapidas{
         @include position(flex,center, right, column);
-        width: 100%;
-        height: auto;
-        gap: 5px;  
-        background-color: #131818;
+        width: 50%;
+        height: 20vh;
+        gap: 5px;
+        padding: 10px;       
+        background-color: $border-black-color;
         border-radius: 10px;
         padding: 10px;
 
         .produto{
-            color:#FFD700;
-        }
+            color:#FFD700;}
         .KM-troca{
-            color:green;
-        }
+            color:green;}
         .KM-max{
-            color: red;
-        }
-
-    }
+            color: red;}}
 @media (max-width:800px){
-
     .conteiner-AppPage{
-        flex-direction: row;
-    }
+        flex-direction: column;
+        height: auto; 
+        width: 100vw;}
         .sec-home{
-            width: 60%;
-            padding: 10px;
-            flex-direction: column;
-            overflow: scroll;
+            width: 100vw;}
         .sec-carros, .sec-manutencoes{ 
             width: 100%;
-            align-items: flex-start;
-            flex-direction: column;
-        }
-        .div-manutencoes{
-            flex-wrap: wrap;
-        }
-        .div-carros, .div-manutencoes, .info-rapidas{
-            width: 100%;
-            height: auto;
-
+            height: 30vh;
+            overflow: scroll;}
+        .div-carros, .div-manutencoes{
+            width: 50%;
+            height: 80%;
+            align-items: center;
         figure{
             width: 100%;
-            height: 100%;      
-        }
-        }}
-        .atalhos{
-            width: 40%;
-            transition: 1s;
-            height: 100%;
-        &:hover{
-            width: 80%;
-        }}
-    
-            
-    
-
-    }
+            height: 100%;}}}
 
