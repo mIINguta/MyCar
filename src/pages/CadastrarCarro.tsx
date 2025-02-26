@@ -55,7 +55,7 @@ function handleChange (e:any){
 
 const cadCarro = async () =>{
     try{
-        await axios.post('http://localhost:5207/auth/RegistrarCarro', carro
+        await axios.post('http://localhost:5207/auth/register', carro
         ).then(
             response => {
                 response.data

@@ -24,6 +24,7 @@ $border-black-color:#131818;
         color: #ffff;
         margin-left: 10px;
     }
+
 }
 
     .sec-home{
@@ -84,13 +85,15 @@ $border-black-color:#131818;
 }
 
 .atalhos{
- @include position(flex, flex-start, flex-start, column);
+ @include position(flex, flex-start, center, column);
     flex-wrap: wrap;
     width: 30%;
     height:auto;
     color: #fff;
     padding: 10px;
     gap: 15px;
+    text-align: center;
+    
     
     h2{
         font-size: 1.5em;

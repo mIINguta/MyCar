@@ -7,17 +7,15 @@ import Cars from "../components/Cars";
 import Loader from "../components/Loader";
 
 export default function CadastrarManutencao(){
-const {userEmail, userId, userToken, userName}:any = useContext(AuthContext);
+const {userId, userName}:any = useContext(AuthContext);
 const [cars, setCars]:any = useState([]);
 const [loadingCars, setLoadingCars] = useState(true);
 
 
 async function getCars(){
     try{
-        await axios.get('http://localhost:5207/auth/ConsultarCarrosUsuario', {
-            params: {
-                id: (userId || sessionStorage.getItem('user_id'))}
-        }).then(response =>{
+        await axios.get(`http://localhost:5207/auth/cars/${(userId || sessionStorage.getItem('user_id'))}`
+        ).then(response =>{
                 setCars(response.data);
         })}
         catch(error){
@@ -26,6 +24,8 @@ async function getCars(){
            setLoadingCars(false);}
         return {cars, loadingCars}
         }
+
+        
     useEffect(() =>{
         getCars()}, []);
 

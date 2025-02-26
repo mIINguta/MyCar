@@ -3,8 +3,8 @@ import axios from "axios"
 import Aside from "../components/Aside"
 import { AuthContext } from "../Context/AuthContext";
 import LabelLoginComponent from "../components/LabelLoginComponent";
-import { error } from "console";
 import Loader from "../components/Loader";
+import { toast } from "react-toastify";
 export default function MeusDados(){
 
 const {userEmail, userId, userToken, userName}:any = useContext(AuthContext);
@@ -15,12 +15,13 @@ const [passwordBDConfirm, setPasswordBDConfirm] = useState();
 const [message, setMessage] = useState("");
 const [carregando, setCarregando] = useState(true);
 
+const notify = (type: string, msg: string) => {
+    type == "success" ? toast.success(msg) : toast.error(msg);
+}
+
 const receberDados = async () =>{
-    await axios.get("http://localhost:5207/users/ReceberDadosUsuario", {
-        params: {
-            usuario: userName || sessionStorage.getItem('userLogin')
-        }
-    }).then(result => {
+    await axios.get(`http://localhost:5207/users/${userName || sessionStorage.getItem('userLogin')}`)
+        .then(result => {
         setUserNameBD(result.data.normalizedUserName);
         setUserEmailBD(result.data.email);
         setCarregando(false);

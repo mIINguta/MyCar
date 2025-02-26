@@ -5,6 +5,7 @@ import Check from '../assets/icons/check-solid.svg'
 import LabelLoginComponent from "./LabelLoginComponent";
 import axios from "axios";
 import { AuthContext } from "../Context/AuthContext";
+import { toast } from "react-toastify";
 
 
 export default function Cars(carroP:any, props:any){
@@ -13,7 +14,6 @@ export default function Cars(carroP:any, props:any){
     const [handleClass, setHandleClass] = useState(false);
     const [message, setMessage]= useState("");
     const [changeEdit, setChangeEdit] = useState(true);
-    
     const [manutencao, setManutencao] = useState({
         descricao: "",
         valor: 0,
@@ -22,14 +22,16 @@ export default function Cars(carroP:any, props:any){
         quilometragemMaxima: 0,
         idCarro: carroP.id
     });
-
-    
-
     const [carro, setCarro] = useState({ 
         ...carroP
     });
 
-    axios.defaults.headers.common = {'Authorization' : `Bearer ${userToken || sessionStorage.getItem('tokenAuth')}`}
+    axios.defaults.headers.common = {'Authorization' : `Bearer ${userToken || sessionStorage.getItem('tokenAuth')}`};
+
+    const notify = (type: string, msg:string) =>{
+       type == "success" ? toast.success(msg) : toast.error(msg);
+           
+    }
 
     function handleChange (e:any){
         const name = e.target.name;
@@ -79,27 +81,21 @@ export default function Cars(carroP:any, props:any){
     }
     async function atualizarQuilometragem(){
 
-        console.log(parseInt(carro.id));
         if(carro.quilometragemCompra <= carro.quilometragemAtual){
-           try{
-                await axios.put("http://localhost:5207/auth/AtualizarQuilometragem", null, {
+                await axios.patch(`http://localhost:5207/auth/cars/${carro.id}`, null, {
                         params: {
-                        id: carro.id,
-                        quilometragemAtual: carro.quilometragemAtual }
-
+                        quilometragemAtual: carro.quilometragemAtual}
            }).then(response => {
-                    console.log(response.data);
-                    window.alert("A quilometragem foi atualizada com sucesso!");
-                    location.reload();
+                    setChangeEdit(true)
+                    notify("success", "A quilometragem foi atualizada!");
                 })
-            }
-            catch(erro){
-                console.log(erro);
-            }
-        }
-        
-        else
-        window.alert("O valor informado é inválido");
+            .catch(error => {
+                notify("error", "Algo de errado aconteceu! Verifique seus dados e tente novamente!");
+            })
+                
+            
+        }else
+        notify("error", "O valor é inválido!");
     }
 
     function eventButton (event:string){
@@ -110,30 +106,22 @@ export default function Cars(carroP:any, props:any){
             }
             case 'confirmar':{
                 atualizarQuilometragem();
-                (carro.quilometragemAtual < carro.quilometragemCompra? null : setChangeEdit(true));
                 break;
                
             }
         }
     }
     function deleteCar(){
-
             if(window.confirm("Deseja excluir o respectivo veículo?")){
-                 try{
-                    axios.delete(`http://localhost:5207/auth/DeletarCarro/`,{
-                        params:{
-                            "id": carro.id
-                        }
-                    })
+                    axios.delete(`http://localhost:5207/auth/cars/${carro.id}`)
                     .then(response => {
-                        window.alert(response? "O respectivo carro foi excluído!" :  null);
-                        window.location.reload();
-                    })}
-                    catch(error){
-                        console.log(error);
+                        notify("success", "O respectivo carro foi excluído!");
+                    })
+                    .catch(error => {
+                        notify("error", "Algo de errado aconteceu!");
                         setChangeEdit(false);
-                    }  
-    }}
+                    });
+            }       window.location.reload();}
 
     async function cadManutencao(){
         if(manutencao.descricao == ""){
@@ -141,17 +129,15 @@ export default function Cars(carroP:any, props:any){
             setMessage("Verifique os dados e envie novamente.");
         }
         else{
-        try{
-            await axios.post('http://localhost:5207/auth/RegistrarManutencao', manutencao)
+            await axios.post('http://localhost:5207/auth/maintenance', manutencao)
             .then(response =>{
-                window.alert("A manutenção foi cadastrada com sucesso!");
-            } );
+                notify("success", "A manutenção foi cadastrada com sucesso!");
+            })
         
-            }catch(error){
-                console.log(error);
-            }
-        }
-    }
+            .catch(error => {
+                notify("error", "Verifique se os dados foram inseridos corretamente.")
+            })
+    }}
 
    
     
@@ -180,7 +166,7 @@ export default function Cars(carroP:any, props:any){
                  <>
                  <span className="kilometragem" title="Quilometragem de compra"> {carro.quilometragemCompra.toLocaleString()} km </span> 
                     -
-                 <input type="text" className="input-carros" name= "kmAtual" value={carro.quilometragemAtual} onChange={handleChange}/>
+                 <input type="number" className="input-carros" name= "kmAtual" value={carro.quilometragemAtual} onChange={handleChange}/>
                 </>
                 }
 

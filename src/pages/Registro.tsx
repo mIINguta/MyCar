@@ -23,7 +23,7 @@ const handlePassword = (e:any) =>{
 
 const submitRegistro = async () =>{
     try{
-        const result = await axios.post("http://localhost:5207/users/Registrar", {
+        await axios.post("http://localhost:5207/users", {
             "email": `${email}`,
             "senha": `${password}`,
         }).then(response =>{

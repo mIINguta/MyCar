@@ -6,23 +6,21 @@ import axios from 'axios';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../Context/AuthContext';
 
-
-
 export default function Aside(props:any){
-const [newUserName, setNewUserName] = useState("");
+const [newUserName, setNewUserName] = useState(sessionStorage.getItem("userLogin")!);
 const {userId, userToken}:any = useContext(AuthContext);
+const [isEditButton, setIsEditButton] = useState(true);
 
 axios.defaults.headers.common = {'Authorization' : `Bearer ${userToken || sessionStorage.getItem('tokenAuth')}`}
 
 const navigate = useNavigate();
-
 const home = () =>{
     navigate('/auth/home');
 }
 const logOut = () => {
         sessionStorage.removeItem("user_id");
         sessionStorage.removeItem("tokenAuth");
-        sessionStorage.removeItem("userToken");
+        sessionStorage.removeItem("userLoken");
         navigate('/');
 }
 const cadastrarCarro = () => {
@@ -34,28 +32,33 @@ const cadastrarManutencao= () => {
 const editarDados= () => {
     navigate('/auth/editarDados');
 }
-const [ativo, setAtivo] = useState(false);
 
-let isActive = (parm1:any, parm2:any) =>{
-    return ativo == false? parm1 : parm2
-} 
 const handleName = (e:any) =>{
     setNewUserName(e.target.value);
 }
-const handleButtonEditName = () =>{    
-    ativo == false? setAtivo(true) : setAtivo(false);
-   
-    const enviarNome = async () =>{
-        try{
-        await axios.put(`http://localhost:5207/users/AtualizarNome?id=${userId}&name=${newUserName}`)
-        .then(response =>
-            console.log("Funcionou")
-        )}catch(error){
-            console.log(error)}
+
+const enviarNome = async () =>{
+        if(newUserName != "" && !isEditButton){
+            try{
+            await axios.patch(`http://localhost:5207/users/${userId}`,null,{
+                params: {
+                    userName: newUserName
+                }
+            })
+            .then(response => {
+                setIsEditButton(true);
+                sessionStorage.setItem("userLogin", newUserName);
+            }
+            )}catch(error){
+                console.log(error)}
+            }
+
+        else if(newUserName == ""){
+            window.alert("Insira um nome válido");
         }
-        
-        newUserName == null || newUserName == undefined || newUserName == "" ? console.log("O Nome está vazio!") : enviarNome();
-}
+    }     
+
+
 
     return (
         <>
@@ -67,9 +70,9 @@ const handleButtonEditName = () =>{
                     </figure>
                     <div>
                     <span>Oi,</span> 
-                    <input type="text" className='nome-span' onChange = {handleName} defaultValue={props.userName} disabled={isActive (true, false)}/>
-                        <button className='editar' onClick={handleButtonEditName}>
-                            <img src={isActive(Pencil, Check)} alt={isActive("Botão editar", "Botão confirmar")} title={isActive("Botão editar", "Botão confirmar")} />
+                    <input type="text" className='nome-span' onChange = {handleName} value={newUserName} disabled= {isEditButton? true : false} />
+                        <button className='editar' onClick={() => {enviarNome(); setIsEditButton(false);}}>
+                            <img src={isEditButton ? Pencil : Check} alt={isEditButton ? "Botão editar": "Botão confirmar"} title={isEditButton ? "Botão editar": "Botão confirmar"} />
                         </button>
                     </div>
                 </div>

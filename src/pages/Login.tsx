@@ -13,6 +13,7 @@ const [password, setPassword] = useState("");
 const [msgErro, setMsgErro] = useState("");
 const {setUserToken, setUserEmail, setUserName, setUserId}:any = useContext(AuthContext);
 
+
 const navigate = useNavigate(); // uso para redirecionar a rota quando for válido o usuário
 const handleUsuario = (e:any) => {
 setUserLogin(e.target.value)
@@ -22,9 +23,9 @@ setPassword(e.target.value)
 }
 const submitLogin = async () => {
     try{
-        await axios.post("http://localhost:5207/users/Login",{
-                'email': `${userLogin}`, // email pois a classe user c# pede email.
-                'senha':`${password}`
+        await axios.post(`http://localhost:5207/users/${userLogin}`,{
+                email: userLogin, //aqui eu repito pois estou puxando na api o body da classe User
+                senha: password
             }
         ).then(response =>{
                 const token = response.data.token;
