@@ -13,7 +13,6 @@ const [password, setPassword] = useState("");
 const [msgErro, setMsgErro] = useState("");
 const {setUserToken, setUserEmail, setUserName, setUserId}:any = useContext(AuthContext);
 
-
 const navigate = useNavigate(); // uso para redirecionar a rota quando for válido o usuário
 const handleUsuario = (e:any) => {
 setUserLogin(e.target.value)

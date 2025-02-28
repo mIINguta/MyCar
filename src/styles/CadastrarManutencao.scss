@@ -1,49 +1,33 @@
-@mixin position($display, $justify-content, $align-items, $flex-direction){
-    display: $display;
-    justify-content: $justify-content;
-    align-items: $align-items;
-    flex-direction: $flex-direction;
-}
-
-
+@use 'Variables' as *;
 .conteiner-cadmanutencao{
     @include position(flex, space-between, center, row);
     width: 100vw;
     gap: 5px;
-
     h1{
         color:#ffff;
-        font-weight: 400;
-    }
-
-
+        font-weight: 400;}
     .escolha-carro{
         @include position(flex, space-between, center, column);
-        width: 80%;
+        width: 90%;
         .carros{
             display: flex;
-            gap: 10px;
+        
+            overflow-y: scroll;
+            gap: 10px;}}
+            .esconder{
+                display: none;
+            }
         }
-    }
-}
 .add-manutencao{
-    @include position(flex, space-between, center, column);
-}
-
+    @include position(flex, space-between, center, column);}
 @media (max-width:800px){
     .conteiner-cadmanutencao{
         justify-content: center;
-
         .escolha-carro{
-            width: 90%;
-           
+            height: auto;
+            overflow: scroll;
             .carros{
                 flex-direction: column; 
                 align-items: center;
                 .div-carros{
-                    width: 60%;
-                }
-            }
-        }
-    }
-}
+                    width: 60%;}}}}}
