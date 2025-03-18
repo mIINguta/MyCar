@@ -1,9 +1,10 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Aside from "../components/Aside";
 import { AuthContext } from "../Context/AuthContext";
 import LabelLoginComponent from "../components/LabelLoginComponent";
 import axios from "axios";
 import { redirect } from "react-router";
+import Cars from "../components/Cars";
 
 export default function CadastrarCarro(){
 const {userEmail, userId, userToken, userName}:any = useContext(AuthContext);
@@ -19,6 +20,8 @@ const [carro, setCarro] = useState({
         idUsuario:userId,
         manutencoes:[]
 })
+
+
 
 axios.defaults.headers.common = {'Authorization' : `Bearer ${userToken || sessionStorage.getItem('tokenAuth')}`}
 
@@ -52,7 +55,6 @@ function handleChange (e:any){
     }
 }
 
-
 const cadCarro = async () =>{
     try{
         await axios.post('http://localhost:5207/auth/register', carro
@@ -65,8 +67,8 @@ const cadCarro = async () =>{
         )}
         catch(error){
             console.log('algo de errado aconteceu');
-        }     
-}
+        }}
+
     return (
         <>
         <section className="conteiner-cadcarros">
@@ -75,10 +77,10 @@ const cadCarro = async () =>{
             <form action='post'>
                 <h1>Insira as informações do seu veículo</h1>
                     <LabelLoginComponent
-                        name = "modelo"
-                        placeholder = "Modelo"
-                        IClassName = "fa-solid fa-user"
-                        change = {handleChange}
+                    name = "modelo"
+                    placeholder = "Modelo"
+                    IClassName = "fa-solid fa-user"
+                    change = {handleChange}
                     />
                     <LabelLoginComponent
                     name = "marca"
@@ -92,7 +94,6 @@ const cadCarro = async () =>{
                     IClassName = "fa-solid fa-lock"
                     change = {handleChange}
                     />
-                    
                     <LabelLoginComponent
                     name = "anoFabricacao"
                     placeholder = "Ano (Fabricação)"
@@ -113,7 +114,14 @@ const cadCarro = async () =>{
                     />
                     <a className="btn-entrar" onClick={cadCarro}>Cadastrar</a>
                 </form>
-                </div>
+        </div>
+        <div>
+        
+        <Cars 
+        {...carro}
+        />
+         
+        </div>
             </section>
         </>
     )

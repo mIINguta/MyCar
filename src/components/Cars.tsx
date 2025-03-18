@@ -8,7 +8,7 @@ import { AuthContext } from "../Context/AuthContext";
 import { toast } from "react-toastify";
 
 
-export default function Cars(carroP:any, props:any){
+export default function Cars(carroProps:any){
 
     const {userToken} = useContext(AuthContext);
     const [handleClass, setHandleClass] = useState(false);
@@ -18,12 +18,12 @@ export default function Cars(carroP:any, props:any){
         descricao: "",
         valor: 0,
         dataManutencao: "",
-        quilometragemAtual: carroP.quilometragemAtual,
+        quilometragemAtual: carroProps.quilometragemAtual,
         quilometragemMaxima: 0,
-        idCarro: carroP.id
+        idCarro: carroProps.id
     });
     const [carro, setCarro] = useState({ 
-        ...carroP
+        ...carroProps
     });
 
     axios.defaults.headers.common = {'Authorization' : `Bearer ${userToken || sessionStorage.getItem('tokenAuth')}`};
@@ -143,37 +143,37 @@ export default function Cars(carroP:any, props:any){
     
     return (
         <>
-        <div className='div-carros' key={carroP.id}>
+        <div className='div-carros' key={carroProps.id}>
             <figure>
-                <img src={carroP.imagem} alt="" />
+                <img src={carroProps.imagem} alt="" />
             </figure>
             <div className="info">
                 <p>
-                    <span className="modelo">{carro.marca}</span>
-                    <span> {carro.modelo}</span>
-                    <span> {carro.anoFabricacao}</span> 
-                    <span className="placa"> ({carro.placa}) </span>
+                    <span className="marca">{carroProps.marca}</span>
+                    <span className="modelo"> {carroProps.modelo}</span>
+                    <span className="anoFabricacao"> {carroProps.anoFabricacao}</span> 
+                    <span className="placa"> ({carroProps.placa}) </span>
                 </p> 
                 {changeEdit ?
                 <>
                 <p>
-                    <span className="kilometragem" title="Quilometragem de compra"> {carro.quilometragemCompra.toLocaleString()} km </span> 
+                    <span className="kilometragem" title="Quilometragem de compra"> {carroProps.quilometragemCompra.toLocaleString()} km </span> 
                     -
-                    <span className="kilometragem" title="Quilometragem atual"> {carro.quilometragemAtual.toLocaleString()} km </span>
+                    <span className="kilometragem" title="Quilometragem atual"> {carroProps.quilometragemAtual.toLocaleString()} km </span>
                 </p>
                  </>  
                  :
                  <>
-                 <span className="kilometragem" title="Quilometragem de compra"> {carro.quilometragemCompra.toLocaleString()} km </span> 
+                 <span className="kilometragem" title="Quilometragem de compra"> {carro.quilometragemCompra} km </span> 
                     -
                  <input type="number" className="input-carros" name= "kmAtual" value={carro.quilometragemAtual} onChange={handleChange}/>
                 </>
                 }
 
                 
-                { carroP.show? <button className="add-manutencao" title="Adicionar manutenção" onClick={() => setHandleClass(!handleClass)}> + </button> : null}
+                { carroProps.show? <button className="add-manutencao" title="Adicionar manutenção" onClick={() => setHandleClass(!handleClass)}> + </button> : null}
                 
-                {!carroP.show?  
+                {!carroProps.show?  
                     <ul className="buttons">
                         <li>
                             <button className='editar' >
@@ -183,12 +183,12 @@ export default function Cars(carroP:any, props:any){
                         <li>
                             <button className='excluir' title="Excluir Veículo" onClick={deleteCar}>
                                 <img src={Trash} alt="Ícone Lixeira" title="" />
-                                {props.id}
+                                {/* {carroProps.id} */}
                             </button>
                         </li>
                     </ul> : null}
             </div> 
-                { carroP.show? 
+                { carroProps.show? 
                 <form className={`form-manutencao ${handleClass? 'mostrar' : 'esconder'}`}>
                     <LabelLoginComponent placeholder="descrição"
                     IClassName = "fa-solid fa-pen"
@@ -219,7 +219,7 @@ export default function Cars(carroP:any, props:any){
                     value={manutencao.quilometragemMaxima.toLocaleString()}
                     />
                         {message? <span></span> : null}
-                    {/* <LabelLoginComponent placeholder={props.id}/>   */}
+                    {/* <LabelLoginComponent placeholder={carroPropsrops.id}/>   */}
                 <input className="btn-cadastrar" type="submit" value="Cadastrar" onClick={cadManutencao} />
             </form> 
             : null }    
