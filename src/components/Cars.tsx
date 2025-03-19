@@ -6,6 +6,7 @@ import LabelLoginComponent from "./LabelLoginComponent";
 import axios from "axios";
 import { AuthContext } from "../Context/AuthContext";
 import { toast } from "react-toastify";
+import Ferrari from "../assets/images/ferrari-foto.jpg"
 
 
 export default function Cars(carroProps:any){
@@ -145,8 +146,8 @@ export default function Cars(carroProps:any){
         <>
         <div className='div-carros' key={carroProps.id}>
             <figure>
-                <img src={carroProps.imagem} alt="" />
-            </figure>
+                <img src={carroProps.imagemCarro == "" || carroProps.imagemCarro == null? Ferrari : carroProps.imagemCarro} alt="" />
+            </figure> 
             <div className="info">
                 <p>
                     <span className="marca">{carroProps.marca}</span>

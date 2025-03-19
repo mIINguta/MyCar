@@ -1,12 +1,10 @@
 import Aside from "../components/Aside"
-import Ferrari from "../assets/images/ferrari-foto.jpg"
 import axios from "axios"
 import {useContext, useEffect, useState} from "react"
 import Loader from "../components/Loader"
 import { AuthContext } from "../Context/AuthContext"
 import Cars from "../components/Cars"
 import Manutencao from "../components/Manutencao"
-import { ToastContainer } from "react-toastify"
 
 export default function Principal(){
 const {userId,setUserId, userToken, userEmail, setUserEmail, userName, setUserName}:any = useContext(AuthContext);
@@ -61,7 +59,7 @@ useEffect(() =>{
                         <Cars 
                         {...carros}        
                         show = {false}
-                        imagem = {Ferrari} />
+                        />
                         </>)})}   
             </section>
             <h2>Manutenções</h2>

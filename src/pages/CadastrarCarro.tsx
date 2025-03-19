@@ -17,6 +17,7 @@ const [carro, setCarro] = useState({
         quilometragemCompra: 0,
         quilometragemAtual: 0,
         idCarro: 0,
+        imagemCarro: "",
         idUsuario:userId,
         manutencoes:[]
 })
@@ -51,6 +52,9 @@ function handleChange (e:any){
         case "quilometragemAtual":{
             setCarro({...carro, quilometragemAtual: (e.target.value)});
             break;
+        }
+        case "imagemCarro":{
+            setCarro({...carro, imagemCarro:(URL.createObjectURL(e.target.files[0]))})
         }
     }
 }
@@ -112,17 +116,27 @@ const cadCarro = async () =>{
                     IClassName = "fa-solid fa-lock"
                     change = {handleChange}
                     />
+                    <fieldset>
+                        <input type="file" name="imagemCarro" id="" title="Upload de Imagem" accept="image/*" onChange={handleChange}/>
+                        <p className="upload-img">Faça o upload de uma imagem do seu veículo</p>
+                    </fieldset>
+                    
                     <a className="btn-entrar" onClick={cadCarro}>Cadastrar</a>
                 </form>
         </div>
-        <div>
-        
+        {carro.modelo == ""? 
+        null : 
+        <>
+        <h3>Prévia</h3>
+        <div className="preview-car">
+            
         <Cars 
         {...carro}
         />
-         
-        </div>
+        </div></>
+        }
             </section>
+    
         </>
     )
 }

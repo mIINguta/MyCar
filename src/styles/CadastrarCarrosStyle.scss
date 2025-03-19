@@ -1,16 +1,29 @@
 @use 'Variables' as *;
 
 .conteiner-cadcarros{
-    @include position(flex, space-between, center, row);
+    @include position(flex,none, center, row);
     width: 100vw;
     height: 100vh;
+    
     .div-form{
         @include position(flex, center, center, row);
-        width: 90%;
+        width: 40%;
         height: 100%;
         form{
             width: 30%;
             h1{
                 color: #fff;}
             a{
-                background-color: #131818;}}}}
+                background-color: #131818;}}
+        fieldset{
+            border: none;
+            padding: 4px;
+            width: 80%;
+            .upload-img{
+            color:#fff;
+            padding: 5px;
+            font-size: 0.8em;}}}
+    .preview-car{
+        @include position(flex, center, center, row);
+        width: 40%;
+    }}
