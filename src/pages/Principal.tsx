@@ -89,9 +89,12 @@ useEffect(() =>{
                         <> {/* preciso colocar outro map para percorrer as duas manutenções cadastradas */}
                         {carros.manutencoes.map((cmanutencoes:any, c:number) =>{
                             return (
+                            <>                  
+                            {(cmanutencoes.quilometragemMaxima - carros.quilometragemAtual) > 1500 ? 
                             <>
-                            {(cmanutencoes.quilometragemMaxima - carros.quilometragemAtual < 1500 ? 
-                            null :
+                            {null}
+                            </>
+                            :
                             <>
                             <div className="info-rapidas" key={c}>
                                 <p><span>Veículo: </span><span>{carros.modelo}</span></p>
@@ -101,7 +104,7 @@ useEffect(() =>{
                                 <p>Quilometragem de <span className="KM-troca">troca: </span>{cmanutencoes.quilometragemAtual.toLocaleString()} km</p>
                                 <p>Quilometragem <span className="KM-max">máxima: </span>{cmanutencoes.quilometragemMaxima.toLocaleString()} km</p>
                             </div>
-                            </> )}
+                            </> }
                         </> )})}  
                         </>
                     }</>
