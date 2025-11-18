@@ -1,13 +1,12 @@
-import React, { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import axios from "axios"
 import Aside from "../components/Aside"
 import { AuthContext } from "../Context/AuthContext";
 import LabelLoginComponent from "../components/LabelLoginComponent";
 import Loader from "../components/Loader";
-import { toast } from "react-toastify";
 export default function MeusDados(){
 
-const {userEmail, userId, userToken, userName}:any = useContext(AuthContext);
+const {userName}:any = useContext(AuthContext);
 const [userEmailBD, setUserEmailBD] = useState();
 const [userNameBD, setUserNameBD] = useState();
 const [passwordBD, setPasswordBD] = useState();
@@ -15,13 +14,11 @@ const [passwordBDConfirm, setPasswordBDConfirm] = useState();
 const [message, setMessage] = useState("");
 const [carregando, setCarregando] = useState(true);
 
-const notify = (type: string, msg: string) => {
-    type == "success" ? toast.success(msg) : toast.error(msg);
-}
+
 
 const receberDados = async () =>{
     await axios.get(`http://localhost:5207/users/${userName || sessionStorage.getItem('userLogin')}`)
-        .then(result => {
+    .then(result => {
         setUserNameBD(result.data.normalizedUserName);
         setUserEmailBD(result.data.email);
         setCarregando(false);
@@ -29,6 +26,16 @@ const receberDados = async () =>{
     }).catch(error =>{
         console.log(error)
     })
+}
+
+const verifyPassword = () =>{
+    if ((passwordBD && passwordBDConfirm != "") && (passwordBD == passwordBDConfirm)){
+        setMessage("As senhas são válidas");
+        sendData();
+    } 
+    else {
+        setMessage("As senhas não são iguais");
+    }
 }
 
 const handleUserName = (e:any) =>{
@@ -46,11 +53,21 @@ const handleUserPasswordConfirm = (e:any) =>{
     console.log("Senha Confirm:" + passwordBDConfirm);
     verifyPassword();
 }
+const sendData = async() =>{
+try{
+    await axios.put(`http://localhost:5207/users/${sessionStorage.getItem("user_id")}`, {
+        name: userNameBD,
+        email: userEmailBD,
+        password: passwordBD,
+        newPassowrd: passwordBDConfirm
 
-const verifyPassword = () =>{
-    (passwordBD && passwordBDConfirm != "") && (passwordBD == passwordBDConfirm) ? setMessage("As senhas são válidas") : setMessage("As senhas não são iguais");
-    // message != " "?  enviarDados() : console.log("Não foi!");
-}
+    }).then(response=>{
+        window.alert(response);
+    })}
+    catch {
+        console.log("Algo de errado aconteceu");
+    }}
+
 
 useEffect(() =>{
     receberDados()
@@ -62,7 +79,7 @@ useEffect(() =>{
         <section className={`conteiner-meusdados ${carregando ? 'loading' : 'loaded' }`}>
         <Aside userName = {userName || sessionStorage.getItem('userLogin')}/>
         <div className="div-form">
-            <form action='post'>
+            <form>
                 <h1>Aqui estão seus dados <span>!</span></h1>
                     <LabelLoginComponent
                         name = "nome"
@@ -76,7 +93,6 @@ useEffect(() =>{
                     IClassName = "fa-solid fa-envelope"
                     change = {handleUserEmail}
                     />
-                    
                     <LabelLoginComponent
                     name = "senha"
                     placeholder = "Senha"
@@ -90,7 +106,7 @@ useEffect(() =>{
                     change = {handleUserPasswordConfirm}
                     />
                     <p>{message}</p>
-                    <a className="btn-entrar" onClick={verifyPassword} >Atualizar</a>
+                    <button className="btn-atualizar" onClick={verifyPassword}>Atualizar</button>
                 </form>
                 </div>
         </section>

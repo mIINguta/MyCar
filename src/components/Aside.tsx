@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../Context/AuthContext';
 
-export default function Aside(props:any){
+export default function Aside({userName}: {userName:string}){
 const [newUserName, setNewUserName] = useState(sessionStorage.getItem("userLogin")!);
 const {userId, userToken}:any = useContext(AuthContext);
 const [isEditButton, setIsEditButton] = useState(true);
@@ -45,9 +45,9 @@ const enviarNome = async () =>{
                     userName: newUserName
                 }
             })
-            .then(response => {
+            .then(() => {
                 setIsEditButton(true);
-                sessionStorage.setItem("userLogin", newUserName);
+                sessionStorage.setItem("userLogin", newUserName );
             }
             )}catch(error){
                 console.log(error)}
@@ -57,8 +57,6 @@ const enviarNome = async () =>{
             window.alert("Insira um nome válido");
         }
     }     
-
-
 
     return (
         <>
@@ -70,7 +68,7 @@ const enviarNome = async () =>{
                     </figure>
                     <div>
                     <span>Oi,</span> 
-                    <input type="text" className='nome-span' onChange = {handleName} value={newUserName} disabled= {isEditButton? true : false} />
+                    <input type="text" className='nome-span' onChange = {handleName} value={newUserName || userName} disabled= {isEditButton? true : false} />
                         <button className='editar' onClick={() => {enviarNome(); setIsEditButton(false);}}>
                             <img src={isEditButton ? Pencil : Check} alt={isEditButton ? "Botão editar": "Botão confirmar"} title={isEditButton ? "Botão editar": "Botão confirmar"} />
                         </button>

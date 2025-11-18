@@ -1,13 +1,14 @@
 @use 'Variables' as *;
 
-.conteiner-cadcarros{
+.conteiner-cadcarros, .info-carros{
     @include position(flex,none, center, row);
     width: 100vw;
     height: 100vh;
     
+    
     .div-form{
         @include position(flex, center, center, row);
-        width: 40%;
+        width: 50%;
         height: 100%;
         form{
             width: 30%;
@@ -27,3 +28,23 @@
         @include position(flex, center, center, row);
         width: 40%;
     }}
+
+    @media(max-width: 600px){
+        .conteiner-cadcarros{
+            
+        .info-carros{
+            flex-direction: column;
+            overflow: scroll;
+            .div-form{
+                width: 100%;
+                form{
+                    width: 100%;}}
+            .preview-car{
+                padding-top: 20px;
+                div{
+                    width: 60vw;
+                }
+            }
+        }
+    }
+}

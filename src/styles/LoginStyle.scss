@@ -31,7 +31,7 @@ form{
         .imgLogo{
         width: 90px;
         height: 90px;}
-        .btn-entrar{
+        .btn-entrar, .btn-atualizar{
             @include position (flex, center, center, row);
             width: 80%;
             height: 6vh;
@@ -40,7 +40,11 @@ form{
             color: #fff;
             font-weight: 300;
             border: none;
-            cursor: pointer;}}
+            cursor: pointer;}
+        .btn-atualizar{
+            background-color: #131818;
+        }
+        }
 .buttons{
     @include position(flex, space-around, center, row);
     gap: 15px;
@@ -51,6 +55,8 @@ form{
             font-weight: 400;
             color:$green;}}
 @media (max-width:700px){
+    .login{
+        width: 100vw;}
 .loginFormConteiner{
     width: 70%;
     height: 95%;
@@ -61,4 +67,5 @@ display: none;}
 @media (max-width:500px){
 .loginFormConteiner{
     width: 95%;
-    height: 95%;}}}
+    height: 95%;
+}}}

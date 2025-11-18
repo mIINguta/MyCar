@@ -1,8 +1,3 @@
-import React from "react";
-import LoginStyle from '../styles/LoginStyle.scss';
-
-
-
 export default function LabelLoginComponent(props:any){
     return (
         <>

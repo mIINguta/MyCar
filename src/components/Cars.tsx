@@ -34,6 +34,7 @@ export default function Cars(carroProps:any){
            
     }
 
+
     function handleChange (e:any){
         const name = e.target.name;
         switch(name){
@@ -76,9 +77,7 @@ export default function Cars(carroProps:any){
             case "KmProxTrocaManutencao":{
                 setManutencao({...manutencao, quilometragemMaxima: e.target.value});
                 break;
-            }
-
-        }
+            }}
     }
     async function atualizarQuilometragem(){
 
@@ -86,15 +85,13 @@ export default function Cars(carroProps:any){
                 await axios.patch(`http://localhost:5207/auth/cars/${carro.id}`, null, {
                         params: {
                         quilometragemAtual: carro.quilometragemAtual}
-           }).then(response => {
+           }).then(()=> {
                     setChangeEdit(true)
                     notify("success", "A quilometragem foi atualizada!");
                 })
             .catch(error => {
-                notify("error", "Algo de errado aconteceu! Verifique seus dados e tente novamente!");
-            })
-                
-            
+                notify(error, "Algo de errado aconteceu! Verifique seus dados e tente novamente!");
+            }) 
         }else
         notify("error", "O valor é inválido!");
     }
@@ -107,19 +104,18 @@ export default function Cars(carroProps:any){
             }
             case 'confirmar':{
                 atualizarQuilometragem();
-                break;
-               
+                break;  
             }
         }
     }
     function deleteCar(){
             if(window.confirm("Deseja excluir o respectivo veículo?")){
                     axios.delete(`http://localhost:5207/auth/cars/${carro.id}`)
-                    .then(response => {
+                    .then(() => {
                         notify("success", "O respectivo carro foi excluído!");
                     })
                     .catch(error => {
-                        notify("error", "Algo de errado aconteceu!");
+                        notify(error, "Algo de errado aconteceu!");
                         setChangeEdit(false);
                     });
             }       window.location.reload();}
@@ -131,12 +127,12 @@ export default function Cars(carroProps:any){
         }
         else{
             await axios.post('http://localhost:5207/auth/maintenance', manutencao)
-            .then(response =>{
+            .then(() =>{
                 notify("success", "A manutenção foi cadastrada com sucesso!");
             })
         
-            .catch(error => {
-                notify("error", "Verifique se os dados foram inseridos corretamente.")
+            .catch((error) => {
+                notify(error, "Verifique se os dados foram inseridos corretamente.")
             })
     }}
 
@@ -218,10 +214,11 @@ export default function Cars(carroProps:any){
                     change={handleChange}
                     name="KmProxTrocaManutencao"
                     value={manutencao.quilometragemMaxima.toLocaleString()}
+                    
                     />
                         {message? <span></span> : null}
                     {/* <LabelLoginComponent placeholder={carroPropsrops.id}/>   */}
-                <input className="btn-cadastrar" type="submit" value="Cadastrar" onClick={cadManutencao} />
+                <input className="btn-cadastrar" type="" value="Cadastrar" onClick={cadManutencao} />
             </form> 
             : null }    
         </div>

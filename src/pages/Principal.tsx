@@ -7,9 +7,10 @@ import Cars from "../components/Cars"
 import Manutencao from "../components/Manutencao"
 
 export default function Principal(){
-const {userId,setUserId, userToken, userEmail, setUserEmail, userName, setUserName}:any = useContext(AuthContext);
+const {userId,setUserId, userToken,setUserEmail,setUserName}:any = useContext(AuthContext);
 const [cars, setCars]:any = useState([]);
 const [loadingCars, setLoadingCars] = useState(true);
+const ativo = true;
 axios.defaults.headers.common = {'Authorization' : `Bearer ${userToken || sessionStorage.getItem('tokenAuth')}`}
 async function ReceberDados(){
     try{
@@ -46,8 +47,7 @@ useEffect(() =>{
         <> 
         {loadingCars && <Loader/>}
         <section className={`conteiner-AppPage`}>   {/* lógica para puxar classe*/}
-            <Aside 
-            userName = {userName? userName : userEmail}/>
+            <Aside userName={""}            />
             {cars.length != 0? 
             <>
             <section className="sec-home">
@@ -77,8 +77,7 @@ useEffect(() =>{
                     )})  )})} 
             </section>
         </section>
-        
-        <section className="atalhos">
+        <section className={ativo ? "atalhos ativo" : "atalhos desativo"}>
             <h2>Próximas Revisões ❗❗</h2>
             {cars?.map((carros:any, i:number) =>{
                 return (
@@ -90,10 +89,8 @@ useEffect(() =>{
                         {carros.manutencoes.map((cmanutencoes:any, c:number) =>{
                             return (
                             <>                  
-                            {(cmanutencoes.quilometragemMaxima - carros.quilometragemAtual) > 1500 ? 
-                            <>
-                            {null}
-                            </>
+                            {(cmanutencoes.quilometragemMaxima -carros.quilometragemAtual) > 1500 ?
+                            null
                             :
                             <>
                             <div className="info-rapidas" key={c}>

@@ -17,10 +17,8 @@ const notify = (type:string, msg: string) =>{
     type == "success" ? toast.success(msg) : toast.error(msg);
 }
 
-
     function handleChange(e:any){
         const name = e.target.name;
-     
         switch(name){
             case"descricao":{
                 setManutencao({...manutencao, descricao: e.target.value});
@@ -52,12 +50,12 @@ const notify = (type:string, msg: string) =>{
             case 'confirmar':{
                     axios.put(`http://localhost:5207/auth/maintenance/${manutencao.id}` , 
                         {...manutencao}
-                    ).then(response =>{
+                    ).then(() =>{
                        setChangeEdit(true);
                        notify("success", "O registro de manutenção foi atualizado");
                     })
-                    .catch(error => {
-                        notify("error", "Verifique se os dados inseridos são válidos!")
+                    .catch((error) => {
+                        notify(error, "Verifique se os dados inseridos são válidos!")
                     });
                 
                 break;  
@@ -65,13 +63,13 @@ const notify = (type:string, msg: string) =>{
             case"excluir":{
                 if(window.confirm("Deseja excluir esse registro?")){
                         axios.delete(`http://localhost:5207/auth/maintenance/${manutencao.id}`)
-                        .then(response =>{
+                        .then(() =>{
                            location.reload();
                            notify("success", "O registro da manutenção foi excluído com sucesso!");
                         })
-                        .catch(error =>{
+                        .catch((error) =>{
                            
-                            notify("error", "Algo de errado aconteceu!");}
+                            notify(error, "Algo de errado aconteceu!");}
                         );
                 }
                 break;

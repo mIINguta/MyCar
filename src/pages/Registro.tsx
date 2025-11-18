@@ -1,4 +1,4 @@
-import { useState, useRef, useLayoutEffect, useEffect} from "react";
+import { useState, useRef} from "react";
 import LabelLoginComponent from "../components/LabelLoginComponent";
 import axios from "axios";
 import imgBackground from '../assets/background-toyota.jpg';
@@ -21,12 +21,13 @@ const handlePassword = (e:any) =>{
     setPassword(e.target.value);
 }
 
-const submitRegistro = async () =>{
+const submitRegistro = async (event:any) =>{
+    event.preventDefault();
     try{
-        await axios.post("http://localhost:5207/users", {
-            "email": `${email}`,
-            "senha": `${password}`,
-        }).then(response =>{
+        await axios.post("http://localhost:5207/users/register", {
+            Email: `${email}`,
+            senha: `${password}`,
+        }).then(() => {
             window.alert("Sua conta foi criada com sucesso!");
             navigate('/');
         })
@@ -47,7 +48,7 @@ const infoPassword = () => {
         <>
         <section className="registro">
             <section className="registroFormConteiner">
-                    <form action="post">
+                    <form onSubmit={submitRegistro}>
                     <img className="imgLogo" src={imgLogo} alt="Imagem da Logo MyCar" />
                         <h1>Crie uma nova conta<span>.</span></h1>
                     <LabelLoginComponent
@@ -67,7 +68,7 @@ const infoPassword = () => {
                     onFocus = {infoPassword}
                     />
                     
-                    <button onClick={submitRegistro}>Registrar</button>
+                    <button>Registrar</button>
                     <fieldset className={`password-validations ${active? 'ativo': 'desativo'}`} ref={componentRef}>
                         <h3>A senha deve conter:</h3>
                         <p>Uma letra maiúscula</p>

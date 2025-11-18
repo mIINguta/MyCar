@@ -1,4 +1,4 @@
-import React, {useContext, useState } from 'react';
+import {useContext, useState } from 'react';
 import LabelLoginComponent from '../components/LabelLoginComponent';
 import imgBackground from '../assets/background1.jpg';
 import axios from 'axios';
@@ -11,7 +11,8 @@ export default function Login(){
 const [userLogin, setUserLogin] = useState("");
 const [password, setPassword] = useState("");
 const [msgErro, setMsgErro] = useState("");
-const {setUserToken, setUserEmail, setUserName, setUserId}:any = useContext(AuthContext);
+const {setUserToken,setUserName}:any = useContext(AuthContext);
+
 
 const navigate = useNavigate(); // uso para redirecionar a rota quando for válido o usuário
 const handleUsuario = (e:any) => {
@@ -21,8 +22,9 @@ const handlePassword = (e:any) => {
 setPassword(e.target.value)
 }
 const submitLogin = async () => {
+    console.log(userLogin);
     try{
-        await axios.post(`http://localhost:5207/users/${userLogin}`,{
+        await axios.post("http://localhost:5207/users/login",{
                 email: userLogin, //aqui eu repito pois estou puxando na api o body da classe User
                 senha: password
             }

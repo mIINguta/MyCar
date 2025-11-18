@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import Aside from "../components/Aside";
 import { AuthContext } from "../Context/AuthContext";
 import LabelLoginComponent from "../components/LabelLoginComponent";
@@ -7,7 +7,7 @@ import { redirect } from "react-router";
 import Cars from "../components/Cars";
 
 export default function CadastrarCarro(){
-const {userEmail, userId, userToken, userName}:any = useContext(AuthContext);
+const {userId, userToken, userName}:any = useContext(AuthContext);
 const [carro, setCarro] = useState({
         id:0,
         modelo: "",
@@ -61,7 +61,7 @@ function handleChange (e:any){
 
 const cadCarro = async () =>{
     try{
-        await axios.post('http://localhost:5207/auth/register', carro
+        await axios.post('http://localhost:5207/auth/cars/', carro
         ).then(
             response => {
                 response.data
@@ -77,6 +77,7 @@ const cadCarro = async () =>{
         <>
         <section className="conteiner-cadcarros">
         <Aside userName ={userName || sessionStorage.getItem('userLogin')}/>
+        <section className="info-carros">
         <div className="div-form">
             <form action='post'>
                 <h1>Insira as informações do seu veículo</h1>
@@ -135,6 +136,7 @@ const cadCarro = async () =>{
         />
         </div></>
         }
+        </section>
             </section>
     
         </>
